@@ -9,11 +9,13 @@ class App extends React.Component {
 
     this.state = {
       todos: [
-       /*  { id: 0, name: 'todo 1', isCompleted: false },
+        /*  { id: 0, name: 'todo 1', isCompleted: false },
         { id: 1, name: 'todo 2', isCompleted: false },
         { id: 2, name: 'todo 3', isCompleted: false } */
       ],
-      newTodo: ''
+      newTodo: '',
+      isError: false,
+      errorMessage: 'your input field is empty'
     };
   }
 
@@ -47,23 +49,33 @@ class App extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const allIds = [];
-    this.state.todos.forEach(todo => allIds.push(todo.id));
-    const newId = this.state.todos.length > 0 ? allIds.reduce((max, num) => num > max ? num : max) + 1 : 0;
+    if (this.state.newTodo.length < 1) {
+      this.setState({
+        isError: true
+      });
+    } else {
+      const allIds = [];
+      this.state.todos.forEach(todo => allIds.push(todo.id));
+      const newId =
+        this.state.todos.length > 0
+          ? allIds.reduce((max, num) => (num > max ? num : max)) + 1
+          : 0;
 
-    console.log(newId)
+      console.log(newId);
 
-    const newTodo = {
-      id: newId,
-      name: this.state.newTodo,
-      isCompleted: false
-    };
-    const todos = [...this.state.todos, newTodo];
+      const newTodo = {
+        id: newId,
+        name: this.state.newTodo,
+        isCompleted: false
+      };
+      const todos = [...this.state.todos, newTodo];
 
-    this.setState({
-      todos,
-      newTodo: ''
-    });
+      this.setState({
+        isError: false,
+        todos,
+        newTodo: ''
+      });
+    }
   };
 
   render() {
@@ -86,6 +98,7 @@ class App extends React.Component {
             removeTodo={() => this.handleDelete(todo.id)}
           />
         ))}
+        {this.state.isError && <div>{this.state.errorMessage}</div>}
       </div>
     );
   }
