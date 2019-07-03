@@ -9,9 +9,9 @@ class App extends React.Component {
 
     this.state = {
       todos: [
-        { id: 1, name: 'todo 1', isCompleted: false },
-        { id: 2, name: 'todo 2', isCompleted: false },
-        { id: 3, name: 'todo 3', isCompleted: false }
+       /*  { id: 0, name: 'todo 1', isCompleted: false },
+        { id: 1, name: 'todo 2', isCompleted: false },
+        { id: 2, name: 'todo 3', isCompleted: false } */
       ],
       newTodo: ''
     };
@@ -40,7 +40,6 @@ class App extends React.Component {
 
   handleChange = event => {
     const newTodo = event.target.value;
-    console.log(newTodo);
     this.setState({
       newTodo
     });
@@ -48,8 +47,14 @@ class App extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    const allIds = [];
+    this.state.todos.forEach(todo => allIds.push(todo.id));
+    const newId = this.state.todos.length > 0 ? allIds.reduce((max, num) => num > max ? num : max) + 1 : 0;
+
+    console.log(newId)
+
     const newTodo = {
-      id: Math.floor(Math.random()),
+      id: newId,
       name: this.state.newTodo,
       isCompleted: false
     };
