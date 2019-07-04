@@ -1,3 +1,4 @@
+const uuidv4 = require('uuid/v4');
 const defaultState = {
   todos: [
     { id: 0, name: 'todo 1', isCompleted: false },
@@ -12,7 +13,7 @@ const todos = (state = defaultState, action) => {
       const newTodo = {
         name: action.todo,
         isCompleted: false,
-        id: 4
+        id: uuidv4()
       };
       return {
         ...state,

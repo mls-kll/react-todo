@@ -11,7 +11,6 @@ const App = ({ todos, deleteTodo, completeTodo, addTodo }) => {
       <form
         onSubmit={event => {
           event.preventDefault();
-          console.log(todoInput.value)
           addTodo(todoInput.value);
         }}
       >
