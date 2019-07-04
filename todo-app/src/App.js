@@ -12,6 +12,7 @@ const App = ({ todos, error, errorMessage, deleteTodo, completeTodo, addTodo }) 
         onSubmit={event => {
           event.preventDefault();
           addTodo(todoInput.value);
+          todoInput.value = '';
         }}
       >
         <input type="text" ref={node => (todoInput = node)} />
