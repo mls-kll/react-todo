@@ -4,30 +4,41 @@ import { connect } from 'react-redux';
 import Todo from './components/Todo';
 import { removeTodo, completeTodo, addTodo } from './actions/index';
 
-const App = ({ todos, error, errorMessage, deleteTodo, completeTodo, addTodo }) => {
+const App = ({
+  todos,
+  error,
+  errorMessage,
+  deleteTodo,
+  completeTodo,
+  addTodo
+}) => {
   let todoInput;
   return (
     <div className="App">
-      <form
-        onSubmit={event => {
-          event.preventDefault();
-          addTodo(todoInput.value);
-          todoInput.value = '';
-        }}
-      >
-        <input type="text" ref={node => (todoInput = node)} />
-        <button>add todo</button>
-      </form>
-      {todos.map(todo => (
-        <Todo
-          key={todo.id}
-          name={todo.name}
-          isCompleted={todo.isCompleted}
-          handleComplete={() => completeTodo(todo.id)}
-          removeTodo={() => deleteTodo(todo.id)}
-        />
-      ))}
-      {error && <div>{errorMessage}</div>}
+      <div className="todo-wrapper border rounded">
+        <form
+          onSubmit={event => {
+            event.preventDefault();
+            addTodo(todoInput.value);
+            todoInput.value = '';
+          }}
+        >
+          <input type="text" ref={node => (todoInput = node)} />
+          <button className="btn btn-primary ml-5 mb-1">add todo</button>
+        </form>
+        <ul className="list-group list-group-flush">
+          {todos.map(todo => (
+            <Todo
+              key={todo.id}
+              name={todo.name}
+              isCompleted={todo.isCompleted}
+              handleComplete={() => completeTodo(todo.id)}
+              removeTodo={() => deleteTodo(todo.id)}
+            />
+          ))}
+        </ul>
+        {error && <div className='alert alert-danger'>{errorMessage}</div>}
+      </div>
     </div>
   );
 };

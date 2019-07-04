@@ -2,10 +2,10 @@ import React from "react";
 
 const Todo = ({ name, isCompleted, handleComplete, removeTodo }) => {
   return (
-    <div>
+    <li className='list-group-item text-center'>
       <span className={isCompleted ? 'complete' : 'uncomplete'} onClick={handleComplete}>{name}</span>
-      <span onClick={removeTodo}> remove</span>
-    </div>
+      <button className='btn btn-danger ml-5' onClick={removeTodo}> remove</button>
+    </li>
   );
 };
 
