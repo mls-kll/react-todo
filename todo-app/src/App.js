@@ -1,17 +1,67 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
-
+import { connect } from 'react-redux';
 import Todo from './components/Todo';
 
-class App extends React.Component {
-  constructor(props) {
+const App = ({todos}) => {
+  return (
+    <div className="App">
+      <form>
+        <input type="text" />
+        <button>add todo</button>
+      </form>
+      {todos.map(todo => (
+      <Todo
+        key={todo.id}
+        name={todo.name}
+        isCompleted={todo.isCompleted}
+        handleComplete={() => this.handleComplete(todo.id)}
+        removeTodo={() => this.handleDelete(todo.id)}
+      />
+    ))}
+    </div>
+  );
+};
+
+const mapStateToProps = state => {
+  return {
+    todos: state.todos
+  }
+}
+
+export default connect(mapStateToProps)(App);
+
+/* return (
+  <div className="App">
+    <form onSubmit={this.handleSubmit}>
+      <input
+        type="text"
+        onChange={this.handleChange}
+        value={this.state.newTodo}
+      />
+      <button>add todo</button>
+    </form>
+    {this.state.todos.map(todo => (
+      <Todo
+        key={todo.id}
+        name={todo.name}
+        isCompleted={todo.isCompleted}
+        handleComplete={() => this.handleComplete(todo.id)}
+        removeTodo={() => this.handleDelete(todo.id)}
+      />
+    ))}
+    {this.state.isError && <div>{this.state.errorMessage}</div>}
+  </div>
+); */
+
+/* constructor(props) {
     super(props);
 
     this.state = {
       todos: [
-        /*  { id: 0, name: 'todo 1', isCompleted: false },
+        { id: 0, name: 'todo 1', isCompleted: false },
         { id: 1, name: 'todo 2', isCompleted: false },
-        { id: 2, name: 'todo 3', isCompleted: false } */
+        { id: 2, name: 'todo 3', isCompleted: false } 
       ],
       newTodo: '',
       isError: false,
@@ -77,31 +127,4 @@ class App extends React.Component {
       });
     }
   };
-
-  render() {
-    return (
-      <div className="App">
-        <form onSubmit={this.handleSubmit}>
-          <input
-            type="text"
-            onChange={this.handleChange}
-            value={this.state.newTodo}
-          />
-          <button>add todo</button>
-        </form>
-        {this.state.todos.map(todo => (
-          <Todo
-            key={todo.id}
-            name={todo.name}
-            isCompleted={todo.isCompleted}
-            handleComplete={() => this.handleComplete(todo.id)}
-            removeTodo={() => this.handleDelete(todo.id)}
-          />
-        ))}
-        {this.state.isError && <div>{this.state.errorMessage}</div>}
-      </div>
-    );
-  }
-}
-
-export default App;
+ */
