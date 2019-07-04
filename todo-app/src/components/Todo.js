@@ -1,7 +1,7 @@
 import React from 'react';
 import EditTodo from './EditTodo';
 
-const Todo = ({ title, isCompleted, handleComplete, removeTodo, showEdit, displayEditField }) => {
+const Todo = ({ title, isCompleted, handleComplete, removeTodo, showEdit, displayEditField, description, submitEdit, descriptionRef }) => {
   return (
     <li className="list-group-item">
       <div className="todo-list-item">
@@ -20,7 +20,7 @@ const Todo = ({ title, isCompleted, handleComplete, removeTodo, showEdit, displa
           remove
         </button>
       </div>
-      {showEdit && <EditTodo title={title} />}
+      {showEdit && <EditTodo title={title} description={description} submitEdit={submitEdit} descriptionRef={descriptionRef}/>}
     </li>
   );
 };

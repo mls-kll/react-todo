@@ -5,7 +5,7 @@ const defaultState = {
       id: 0,
       title: 'todo 1',
       isCompleted: false,
-      description: 'todo 1 description',
+      description: '',
       showEdit: false
     },
     {
@@ -68,6 +68,17 @@ const todos = (state = defaultState, action) => {
         ...state,
         todos: state.todos.map(todo => {
           if (todo.id === action.id) {
+            todo.showEdit = !todo.showEdit;
+          }
+          return todo;
+        })
+      };
+    case 'ADD_DESCRIPTION':
+      return {
+        ...state,
+        todos: state.todos.map(todo => {
+          if (todo.id === action.id) {
+            todo.description = action.description;
             todo.showEdit = !todo.showEdit;
           }
           return todo;

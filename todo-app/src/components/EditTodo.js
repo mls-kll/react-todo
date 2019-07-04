@@ -1,19 +1,22 @@
 import React from 'react';
 
-const EditTodo = ({title, description}) => {
+const EditTodo = ({ title, description, submitEdit, descriptionRef }) => {
   return (
-    <form className='edit-todo-form border rounded bg-light'>
+    <form
+      className="edit-todo-form border rounded bg-light"
+      onSubmit={submitEdit}
+    >
       <div>
-        <div className='edit-field mb-2'>
+        <div className="edit-field mb-2">
           <span>title</span>
-          <input type="text"  value={title}/>
+          <input type="text" />
         </div>
-        <div className='edit-field'>
+        <div className="edit-field">
           <span>description</span>
-          <textarea type="text"  value={description}/>
+          <textarea type="text" ref={descriptionRef} />
         </div>
       </div>
-      <button className='btn btn-warning'>save</button>
+      <button className="btn btn-warning">save</button>
     </form>
   );
 };

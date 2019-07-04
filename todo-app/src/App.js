@@ -2,7 +2,13 @@ import React from 'react';
 import './App.css';
 import { connect } from 'react-redux';
 import Todo from './components/Todo';
-import { removeTodo, completeTodo, addTodo, showEdit } from './actions/index';
+import {
+  removeTodo,
+  completeTodo,
+  addTodo,
+  showEdit,
+  addDescription
+} from './actions/index';
 
 const App = ({
   todos,
@@ -11,9 +17,11 @@ const App = ({
   removeTodo,
   completeTodo,
   addTodo,
-  displayEditField
+  displayEditField,
+  addDescription
 }) => {
   let todoInput;
+  let descriptionInput;
   return (
     <div className="App">
       <div className="todo-wrapper border rounded">
@@ -32,11 +40,18 @@ const App = ({
             <Todo
               key={todo.id}
               title={todo.title}
+              description={todo.description}
               isCompleted={todo.isCompleted}
               handleComplete={() => completeTodo(todo.id)}
               removeTodo={() => removeTodo(todo.id)}
               showEdit={todo.showEdit}
               displayEditField={() => displayEditField(todo.id)}
+              submitEdit={event => {
+                event.preventDefault();
+                addDescription(todo.id, descriptionInput.value);
+                descriptionInput.value = '';
+              }}
+              descriptionRef={node => (descriptionInput = node)}
             />
           ))}
         </ul>
@@ -58,7 +73,8 @@ const mapDispatchToProps = dispatch => ({
   removeTodo: id => dispatch(removeTodo(id)),
   completeTodo: id => dispatch(completeTodo(id)),
   addTodo: todo => dispatch(addTodo(todo)),
-  displayEditField: id => dispatch(showEdit(id))
+  displayEditField: id => dispatch(showEdit(id)),
+  addDescription: (id, description) => dispatch(addDescription(id, description))
 });
 
 export default connect(
