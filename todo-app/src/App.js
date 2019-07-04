@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Todo from './components/Todo';
 import { removeTodo, completeTodo, addTodo } from './actions/index';
 
-const App = ({ todos, deleteTodo, completeTodo, addTodo }) => {
+const App = ({ todos, error, errorMessage, deleteTodo, completeTodo, addTodo }) => {
   let todoInput;
   return (
     <div className="App">
@@ -26,13 +26,16 @@ const App = ({ todos, deleteTodo, completeTodo, addTodo }) => {
           removeTodo={() => deleteTodo(todo.id)}
         />
       ))}
+      {error && <div>{errorMessage}</div>}
     </div>
   );
 };
 
 const mapStateToProps = state => {
   return {
-    todos: state.todos.todos
+    todos: state.todos.todos,
+    error: state.todos.isError,
+    errorMessage: state.todos.errorMessage
   };
 };
 

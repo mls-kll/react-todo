@@ -4,21 +4,32 @@ const defaultState = {
     { id: 0, name: 'todo 1', isCompleted: false },
     { id: 1, name: 'todo 2', isCompleted: false },
     { id: 2, name: 'todo 3', isCompleted: false }
-  ]
+  ],
+  isError: false,
+  errorMessage: 'your input field is empty'
 };
 
 const todos = (state = defaultState, action) => {
   switch (action.type) {
     case 'ADD_TODO':
-      const newTodo = {
-        name: action.todo,
-        isCompleted: false,
-        id: uuidv4()
-      };
-      return {
-        ...state,
-        todos: [...state.todos, newTodo]
-      };
+        if(action.todo.length < 1){
+            return {
+                ...state,
+                isError: !state.isError
+              };
+        } else {
+            const newTodo = {
+                name: action.todo,
+                isCompleted: false,
+                id: uuidv4()
+              };
+              return {
+                ...state,
+                todos: [...state.todos, newTodo],
+                isError: false
+              };
+        }
+   
     case 'REMOVE_TODO':
       return {
         ...state,
