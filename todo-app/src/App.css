@@ -1,20 +1,24 @@
-
-.App{
-width: 100vw;
-height: 100vh;
-display: flex;
-justify-content: center;
-align-items: center;
+.App {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.todo-wrapper{
+.todo-wrapper {
   padding: 5px;
 }
 
-.complete{
+.complete {
   text-decoration: line-through;
 }
 
-.uncomplete{
+.uncomplete {
   text-decoration: none;
+}
+
+.todo-list-item {
+  display: flex;
+  justify-content: space-between;
 }
