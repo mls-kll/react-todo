@@ -8,7 +8,7 @@ const App = ({
   todos,
   error,
   errorMessage,
-  deleteTodo,
+  removeTodo,
   completeTodo,
   addTodo
 }) => {
@@ -33,7 +33,7 @@ const App = ({
               name={todo.name}
               isCompleted={todo.isCompleted}
               handleComplete={() => completeTodo(todo.id)}
-              removeTodo={() => deleteTodo(todo.id)}
+              removeTodo={() => removeTodo(todo.id)}
             />
           ))}
         </ul>
@@ -52,7 +52,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  deleteTodo: id => dispatch(removeTodo(id)),
+  removeTodo: id => dispatch(removeTodo(id)),
   completeTodo: id => dispatch(completeTodo(id)),
   addTodo: todo => dispatch(addTodo(todo))
 });

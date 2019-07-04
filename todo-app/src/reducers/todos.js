@@ -15,7 +15,7 @@ const todos = (state = defaultState, action) => {
       if (action.todo.length < 1) {
         return {
           ...state,
-          isError: !state.isError
+          isError: true
         };
       } else {
         const newTodo = {
