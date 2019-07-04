@@ -6,8 +6,8 @@
   align-items: center;
 }
 
-.todo-wrapper {
-  padding: 5px;
+.todo-main-form {
+  padding: 15px;
 }
 
 .complete {
@@ -23,19 +23,19 @@
   justify-content: space-between;
 }
 
-.edit-field{
+.edit-field {
   display: flex;
   justify-content: space-between;
 }
 
-.edit-todo-form{
+.edit-todo-form {
   padding: 5px;
 }
 
-.fa-check-circle{
+.todo-icon {
   font-size: 25px;
 }
 
-.fa-check-circle:hover{
+.todo-icon:hover {
   cursor: pointer;
 }

@@ -21,8 +21,8 @@ const Todo = ({
             onClick={handleComplete}
             className={
               isCompleted
-                ? 'fas fa-check-circle text-success'
-                : 'far fa-check-circle'
+                ? 'todo-icon fas fa-check-circle text-success'
+                : 'todo-icon far fa-circle'
             }
           />
         </span>

@@ -29,6 +29,7 @@ const App = ({
     <div className="App">
       <div className="todo-wrapper border rounded">
         <form
+          className="todo-main-form bg-light"
           onSubmit={event => {
             event.preventDefault();
             addTodo(todoInput.value);
