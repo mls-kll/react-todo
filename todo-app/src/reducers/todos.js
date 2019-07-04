@@ -11,7 +11,7 @@ const defaultState = {
     {
       id: 1,
       title: 'todo 2',
-      isCompleted: false,
+      isCompleted: true,
       description: 'todo 2 description',
       showEdit: false
     },
