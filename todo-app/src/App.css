@@ -22,3 +22,20 @@
   display: flex;
   justify-content: space-between;
 }
+
+.edit-field{
+  display: flex;
+  justify-content: space-between;
+}
+
+.edit-todo-form{
+  padding: 5px;
+}
+
+.fa-check-circle{
+  font-size: 25px;
+}
+
+.fa-check-circle:hover{
+  cursor: pointer;
+}

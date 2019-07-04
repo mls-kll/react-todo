@@ -1,9 +1,24 @@
 const uuidv4 = require('uuid/v4');
 const defaultState = {
   todos: [
-    { id: 0, name: 'todo 1', isCompleted: false },
-    { id: 1, name: 'todo 2', isCompleted: false },
-    { id: 2, name: 'todo 3', isCompleted: false }
+    {
+      id: 0,
+      title: 'todo 1',
+      isCompleted: false,
+      description: 'todo 1 description'
+    },
+    {
+      id: 1,
+      title: 'todo 2',
+      isCompleted: false,
+      description: 'todo 2 description'
+    },
+    {
+      id: 2,
+      title: 'todo 3',
+      isCompleted: false,
+      description: 'todo 3 description'
+    }
   ],
   isError: false,
   errorMessage: 'your input field is empty'
@@ -19,7 +34,7 @@ const todos = (state = defaultState, action) => {
         };
       } else {
         const newTodo = {
-          name: action.todo,
+          title: action.todo,
           isCompleted: false,
           id: uuidv4()
         };

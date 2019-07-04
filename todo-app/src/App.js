@@ -30,7 +30,7 @@ const App = ({
           {todos.map(todo => (
             <Todo
               key={todo.id}
-              name={todo.name}
+              title={todo.title}
               isCompleted={todo.isCompleted}
               handleComplete={() => completeTodo(todo.id)}
               removeTodo={() => removeTodo(todo.id)}
