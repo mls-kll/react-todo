@@ -2,8 +2,9 @@ import React from 'react';
 import './App.css';
 import { connect } from 'react-redux';
 import Todo from './components/Todo';
+import { removeTodo } from './actions/index';
 
-const App = ({todos}) => {
+const App = ({ todos, deleteTodo }) => {
   return (
     <div className="App">
       <form>
@@ -11,25 +12,32 @@ const App = ({todos}) => {
         <button>add todo</button>
       </form>
       {todos.map(todo => (
-      <Todo
-        key={todo.id}
-        name={todo.name}
-        isCompleted={todo.isCompleted}
-        handleComplete={() => this.handleComplete(todo.id)}
-        removeTodo={() => this.handleDelete(todo.id)}
-      />
-    ))}
+        <Todo
+          key={todo.id}
+          name={todo.name}
+          isCompleted={todo.isCompleted}
+          handleComplete={() => this.handleComplete(todo.id)}
+          removeTodo={() => deleteTodo(todo.id)}
+        />
+      ))}
     </div>
   );
 };
 
 const mapStateToProps = state => {
   return {
-    todos: state.todos
-  }
-}
+    todos: state.todos.todos
+  };
+};
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = dispatch => ({
+  deleteTodo: id => dispatch(removeTodo(id))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
 
 /* return (
   <div className="App">
