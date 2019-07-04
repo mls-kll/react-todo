@@ -7,7 +7,8 @@ import {
   completeTodo,
   addTodo,
   showEdit,
-  addDescription
+  addDescription,
+  editTitle
 } from './actions/index';
 
 const App = ({
@@ -18,10 +19,12 @@ const App = ({
   completeTodo,
   addTodo,
   displayEditField,
-  addDescription
+  addDescription,
+  editTitle
 }) => {
   let todoInput;
   let descriptionInput;
+  let titleInput;
   return (
     <div className="App">
       <div className="todo-wrapper border rounded">
@@ -49,9 +52,10 @@ const App = ({
               submitEdit={event => {
                 event.preventDefault();
                 addDescription(todo.id, descriptionInput.value);
-                descriptionInput.value = '';
+                editTitle(todo.id, titleInput.value);
               }}
               descriptionRef={node => (descriptionInput = node)}
+              titleRef={node => (titleInput = node)}
             />
           ))}
         </ul>
@@ -74,7 +78,9 @@ const mapDispatchToProps = dispatch => ({
   completeTodo: id => dispatch(completeTodo(id)),
   addTodo: todo => dispatch(addTodo(todo)),
   displayEditField: id => dispatch(showEdit(id)),
-  addDescription: (id, description) => dispatch(addDescription(id, description))
+  addDescription: (id, description) =>
+    dispatch(addDescription(id, description)),
+  editTitle: (id, title) => dispatch(editTitle(id, title))
 });
 
 export default connect(

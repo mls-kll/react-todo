@@ -1,6 +1,12 @@
 import React from 'react';
 
-const EditTodo = ({ title, description, submitEdit, descriptionRef }) => {
+const EditTodo = ({
+  title,
+  description,
+  titleRef,
+  descriptionRef,
+  submitEdit
+}) => {
   return (
     <form
       className="edit-todo-form border rounded bg-light"
@@ -9,11 +15,15 @@ const EditTodo = ({ title, description, submitEdit, descriptionRef }) => {
       <div>
         <div className="edit-field mb-2">
           <span>title</span>
-          <input type="text" />
+          <input type="text" defaultValue={title} ref={titleRef} />
         </div>
         <div className="edit-field">
           <span>description</span>
-          <textarea type="text" ref={descriptionRef} />
+          <textarea
+            type="text"
+            defaultValue={description}
+            ref={descriptionRef}
+          />
         </div>
       </div>
       <button className="btn btn-warning">save</button>

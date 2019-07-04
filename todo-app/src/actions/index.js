@@ -23,3 +23,11 @@ export const addDescription = (id, description) => ({
   id,
   description
 });
+
+
+export const editTitle = (id, title) => ({
+    type: 'EDIT_TITLE',
+    id,
+    title
+  });
+  
