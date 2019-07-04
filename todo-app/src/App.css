@@ -39,3 +39,7 @@
 .todo-icon:hover {
   cursor: pointer;
 }
+
+.todo-title:hover {
+  cursor: pointer;
+}

@@ -26,7 +26,7 @@ const Todo = ({
             }
           />
         </span>
-        <span onClick={displayEditField}>{title}</span>
+        <span className='todo-title' onClick={displayEditField}>{title}</span>
         <button className="btn btn-danger ml-5 mb-2" onClick={removeTodo}>
           remove
         </button>
