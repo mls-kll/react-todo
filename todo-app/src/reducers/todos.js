@@ -5,19 +5,22 @@ const defaultState = {
       id: 0,
       title: 'todo 1',
       isCompleted: false,
-      description: 'todo 1 description'
+      description: 'todo 1 description',
+      showEdit: false
     },
     {
       id: 1,
       title: 'todo 2',
       isCompleted: false,
-      description: 'todo 2 description'
+      description: 'todo 2 description',
+      showEdit: false
     },
     {
       id: 2,
       title: 'todo 3',
       isCompleted: false,
-      description: 'todo 3 description'
+      description: 'todo 3 description',
+      showEdit: false
     }
   ],
   isError: false,
@@ -56,6 +59,16 @@ const todos = (state = defaultState, action) => {
         todos: state.todos.map(todo => {
           if (todo.id === action.id) {
             todo.isCompleted = !todo.isCompleted;
+          }
+          return todo;
+        })
+      };
+    case 'SHOW_EDIT_FIELD':
+      return {
+        ...state,
+        todos: state.todos.map(todo => {
+          if (todo.id === action.id) {
+            todo.showEdit = !todo.showEdit;
           }
           return todo;
         })

@@ -1,7 +1,7 @@
 import React from 'react';
 import EditTodo from './EditTodo';
 
-const Todo = ({ title, isCompleted, handleComplete, removeTodo }) => {
+const Todo = ({ title, isCompleted, handleComplete, removeTodo, showEdit, displayEditField }) => {
   return (
     <li className="list-group-item">
       <div className="todo-list-item">
@@ -15,12 +15,12 @@ const Todo = ({ title, isCompleted, handleComplete, removeTodo }) => {
             }
           />
         </span>
-        <span>{title}</span>
+        <span onClick={displayEditField}>{title}</span>
         <button className="btn btn-danger ml-5 mb-2" onClick={removeTodo}>
           remove
         </button>
       </div>
-      <EditTodo title={title} />
+      {showEdit && <EditTodo title={title} />}
     </li>
   );
 };

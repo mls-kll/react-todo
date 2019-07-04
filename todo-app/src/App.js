@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import { connect } from 'react-redux';
 import Todo from './components/Todo';
-import { removeTodo, completeTodo, addTodo } from './actions/index';
+import { removeTodo, completeTodo, addTodo, showEdit } from './actions/index';
 
 const App = ({
   todos,
@@ -10,7 +10,8 @@ const App = ({
   errorMessage,
   removeTodo,
   completeTodo,
-  addTodo
+  addTodo,
+  displayEditField
 }) => {
   let todoInput;
   return (
@@ -34,10 +35,12 @@ const App = ({
               isCompleted={todo.isCompleted}
               handleComplete={() => completeTodo(todo.id)}
               removeTodo={() => removeTodo(todo.id)}
+              showEdit={todo.showEdit}
+              displayEditField={() => displayEditField(todo.id)}
             />
           ))}
         </ul>
-        {error && <div className='alert alert-danger'>{errorMessage}</div>}
+        {error && <div className="alert alert-danger">{errorMessage}</div>}
       </div>
     </div>
   );
@@ -54,7 +57,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   removeTodo: id => dispatch(removeTodo(id)),
   completeTodo: id => dispatch(completeTodo(id)),
-  addTodo: todo => dispatch(addTodo(todo))
+  addTodo: todo => dispatch(addTodo(todo)),
+  displayEditField: id => dispatch(showEdit(id))
 });
 
 export default connect(

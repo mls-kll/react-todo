@@ -12,4 +12,9 @@ export const completeTodo = (id) => ({
     type: 'REMOVE_TODO',
     id
   });
+
+  export const showEdit = (id) => ({
+      type: 'SHOW_EDIT_FIELD',
+      id
+  })
   
