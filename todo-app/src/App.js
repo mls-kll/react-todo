@@ -2,13 +2,20 @@ import React from 'react';
 import './App.css';
 import { connect } from 'react-redux';
 import Todo from './components/Todo';
-import { removeTodo, completeTodo } from './actions/index';
+import { removeTodo, completeTodo, addTodo } from './actions/index';
 
-const App = ({ todos, deleteTodo, completeTodo }) => {
+const App = ({ todos, deleteTodo, completeTodo, addTodo }) => {
+  let todoInput;
   return (
     <div className="App">
-      <form>
-        <input type="text" />
+      <form
+        onSubmit={event => {
+          event.preventDefault();
+          console.log(todoInput.value)
+          addTodo(todoInput.value);
+        }}
+      >
+        <input type="text" ref={node => (todoInput = node)} />
         <button>add todo</button>
       </form>
       {todos.map(todo => (
@@ -32,7 +39,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   deleteTodo: id => dispatch(removeTodo(id)),
-  completeTodo: id => dispatch(completeTodo(id))
+  completeTodo: id => dispatch(completeTodo(id)),
+  addTodo: todo => dispatch(addTodo(todo))
 });
 
 export default connect(
@@ -77,27 +85,6 @@ export default connect(
       errorMessage: 'your input field is empty'
     };
   }
-
-  handleComplete = id => {
-    const changedTodos = this.state.todos.map(todo => {
-      if (todo.id === id) {
-        todo.isCompleted = !todo.isCompleted;
-      }
-      return todo;
-    });
-
-    this.setState({
-      todos: changedTodos
-    });
-  };
-
-  handleDelete = id => {
-    const todos = this.state.todos.filter(todo => todo.id !== id);
-    console.log(todos);
-    this.setState({
-      todos
-    });
-  };
 
   handleChange = event => {
     const newTodo = event.target.value;

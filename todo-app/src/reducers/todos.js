@@ -8,6 +8,16 @@ const defaultState = {
 
 const todos = (state = defaultState, action) => {
   switch (action.type) {
+    case 'ADD_TODO':
+      const newTodo = {
+        name: action.todo,
+        isCompleted: false,
+        id: 4
+      };
+      return {
+        ...state,
+        todos: [...state.todos, newTodo]
+      };
     case 'REMOVE_TODO':
       return {
         ...state,
