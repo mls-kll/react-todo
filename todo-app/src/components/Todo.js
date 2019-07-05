@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { setSelectedTodo } from '../actions/index';
 
 const Todo = ({
   title,
@@ -7,11 +9,7 @@ const Todo = ({
   handleComplete,
   removeTodo,
   id,
-  displayEditField,
-  description,
-  submitEdit,
-  descriptionRef,
-  titleRef
+  setSelectedTodo
 }) => {
   return (
     <li className="list-group-item">
@@ -26,25 +24,22 @@ const Todo = ({
             }
           />
         </span>
-        <Link to={`todo/edit/${id}`}>
-        <span className="todo-title">
-          {title}
-        </span>
+        <Link to={`todo/edit/${id}`} onClick={() => setSelectedTodo(id)}>
+          <span className="todo-title">{title}</span>
         </Link>
         <button className="btn btn-danger ml-5 mb-2" onClick={removeTodo}>
           remove
         </button>
       </div>
-
-      {/*  <EditTodo
-          title={title}
-          description={description}
-          submitEdit={submitEdit}
-          descriptionRef={descriptionRef}
-          titleRef={titleRef}
-        /> */}
     </li>
   );
 };
 
-export default Todo;
+const mapDispatchToProps = dispatch => ({
+  setSelectedTodo: id => dispatch(setSelectedTodo(id))
+});
+
+export default connect(
+  undefined,
+  mapDispatchToProps
+)(Todo);

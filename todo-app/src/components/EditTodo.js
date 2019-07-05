@@ -1,40 +1,20 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import EditError from './EditError';
+import EditForm from './EditForm';
 
-const EditTodo = ({
-  title,
-  description,
-  titleRef,
-  descriptionRef,
-  submitEdit
-}) => {
-  return (
-    <form
-      className="edit-todo-form border rounded bg-light"
-      onSubmit={submitEdit}
-    >
-      <div>
-        <div className="edit-field mb-2">
-          <span>title</span>
-          <input type="text" defaultValue={title} ref={titleRef} />
-        </div>
-        <div className="edit-field">
-          <span>description</span>
-          <textarea
-            type="text"
-            defaultValue={description}
-            ref={descriptionRef}
-          />
-        </div>
-      </div>
-      <div className="edit-button-container mt-3">
-        <button className="btn btn-warning">save</button>
-        <Link className="btn btn-secondary" to="/">
-          discard
-        </Link>
-      </div>
-    </form>
-  );
+const EditTodo = ({ todo, id }) => {
+  return <div>{todo !== undefined ? <EditForm  todo={todo}/> : <EditError />}</div>;
 };
 
-export default EditTodo;
+const mapStateToProps = (state, route) => {
+  return {
+    todo: state.todos.find(todo => todo.id == route.match.params.id),
+    id: route.match.params.id
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  undefined
+)(EditTodo);

@@ -13,8 +13,8 @@ export const removeTodo = id => ({
   id
 });
 
-export const showEdit = id => ({
-  type: 'SHOW_EDIT_FIELD',
+export const setSelectedTodo = id => ({
+  type: 'SET_SELECTED_TODO',
   id
 });
 

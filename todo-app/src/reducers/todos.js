@@ -24,6 +24,7 @@ const defaultState = {
     }
   ],
   isError: false,
+  selectedTodo: null,
   errorMessage: 'your input field is empty'
 };
 
@@ -55,13 +56,12 @@ const todos = (state = defaultState, action) => {
             : todo
         )
       };
-    case 'SHOW_EDIT_FIELD':
+    case 'SET_SELECTED_TODO':
       return {
         ...state,
-        todos: state.todos.map(todo =>
-          todo.id === action.id ? { ...todo, showEdit: !todo.showEdit } : todo
-        )
+        selectedTodo: action.id
       };
+
     case 'ADD_DESCRIPTION':
       return {
         ...state,
