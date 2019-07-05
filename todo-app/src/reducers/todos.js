@@ -56,44 +56,36 @@ const todos = (state = defaultState, action) => {
     case 'COMPLETE_TODO':
       return {
         ...state,
-        todos: state.todos.map(todo => {
-          if (todo.id === action.id) {
-            todo.isCompleted = !todo.isCompleted;
-          }
-          return todo;
-        })
+        todos: state.todos.map(todo =>
+          todo.id === action.id
+            ? { ...todo, isCompleted: !todo.isCompleted }
+            : todo
+        )
       };
     case 'SHOW_EDIT_FIELD':
       return {
         ...state,
-        todos: state.todos.map(todo => {
-          if (todo.id === action.id) {
-            todo.showEdit = !todo.showEdit;
-          }
-          return todo;
-        })
+        todos: state.todos.map(todo =>
+          todo.id === action.id ? { ...todo, showEdit: !todo.showEdit } : todo
+        )
       };
     case 'ADD_DESCRIPTION':
       return {
         ...state,
-        todos: state.todos.map(todo => {
-          if (todo.id === action.id) {
-            todo.description = action.description;
-            todo.showEdit = false;
-          }
-          return todo;
-        })
+        todos: state.todos.map(todo =>
+          todo.id === action.id
+            ? { ...todo, description: action.description, showEdit: false }
+            : todo
+        )
       };
     case 'EDIT_TITLE':
       return {
         ...state,
-        todos: state.todos.map(todo => {
-          if (todo.id === action.id) {
-            todo.title = action.title;
-            todo.showEdit = false;
-          }
-          return todo;
-        })
+        todos: state.todos.map(todo =>
+          todo.id === action.id
+            ? { ...todo, title: action.title, showEdit: false }
+            : todo
+        )
       };
     default:
       return state;
