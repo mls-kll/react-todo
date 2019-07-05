@@ -4,7 +4,7 @@ import EditError from './EditError';
 import EditForm from './EditForm';
 
 const EditTodo = ({ todo, id }) => {
-  return <div>{todo !== undefined ? <EditForm  todo={todo}/> : <EditError />}</div>;
+  return <div>{todo !== undefined ? <EditForm id={id}  todo={todo}/> : <EditError />}</div>;
 };
 
 const mapStateToProps = (state, route) => {

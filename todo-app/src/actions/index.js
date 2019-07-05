@@ -13,11 +13,6 @@ export const removeTodo = id => ({
   id
 });
 
-export const setSelectedTodo = id => ({
-  type: 'SET_SELECTED_TODO',
-  id
-});
-
 export const addDescription = (id, description) => ({
   type: 'ADD_DESCRIPTION',
   id,
