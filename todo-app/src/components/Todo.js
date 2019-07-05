@@ -1,12 +1,12 @@
 import React from 'react';
-import EditTodo from './EditTodo';
+import { Link } from 'react-router-dom';
 
 const Todo = ({
   title,
   isCompleted,
   handleComplete,
   removeTodo,
-  showEdit,
+  id,
   displayEditField,
   description,
   submitEdit,
@@ -26,20 +26,23 @@ const Todo = ({
             }
           />
         </span>
-        <span className='todo-title' onClick={displayEditField}>{title}</span>
+        <Link to={`todo/edit/${id}`}>
+        <span className="todo-title">
+          {title}
+        </span>
+        </Link>
         <button className="btn btn-danger ml-5 mb-2" onClick={removeTodo}>
           remove
         </button>
       </div>
-      {showEdit && (
-        <EditTodo
+
+      {/*  <EditTodo
           title={title}
           description={description}
           submitEdit={submitEdit}
           descriptionRef={descriptionRef}
           titleRef={titleRef}
-        />
-      )}
+        /> */}
     </li>
   );
 };

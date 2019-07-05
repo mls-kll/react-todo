@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const EditTodo = ({
   title,
@@ -26,7 +27,12 @@ const EditTodo = ({
           />
         </div>
       </div>
-      <button className="btn btn-warning">save</button>
+      <div className="edit-button-container mt-3">
+        <button className="btn btn-warning">save</button>
+        <Link className="btn btn-secondary" to="/">
+          discard
+        </Link>
+      </div>
     </form>
   );
 };

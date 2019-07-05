@@ -1,15 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Todo from './Todo';
-import {
-  removeTodo,
-  completeTodo,
-  addTodo,
-  showEdit,
-  addDescription,
-  editTitle,
-  setError
-} from '../actions/index';
+import { removeTodo, completeTodo, addTodo, setError } from '../actions/index';
 
 const Main = ({
   todos,
@@ -18,14 +10,10 @@ const Main = ({
   removeTodo,
   completeTodo,
   addTodo,
-  displayEditField,
-  addDescription,
-  editTitle,
   setError
 }) => {
   let todoInput;
-  let descriptionInput;
-  let titleInput;
+
   return (
     <div className="Main">
       <div className="todo-wrapper border rounded">
@@ -44,20 +32,11 @@ const Main = ({
           {todos.map(todo => (
             <Todo
               key={todo.id}
+              id={todo.id}
               title={todo.title}
-              description={todo.description}
               isCompleted={todo.isCompleted}
               handleComplete={() => completeTodo(todo.id)}
               removeTodo={() => removeTodo(todo.id)}
-              showEdit={todo.showEdit}
-              displayEditField={() => displayEditField(todo.id)}
-              submitEdit={event => {
-                event.preventDefault();
-                addDescription(todo.id, descriptionInput.value);
-                editTitle(todo.id, titleInput.value);
-              }}
-              descriptionRef={node => (descriptionInput = node)}
-              titleRef={node => (titleInput = node)}
             />
           ))}
         </ul>
@@ -79,10 +58,6 @@ const mapDispatchToProps = dispatch => ({
   removeTodo: id => dispatch(removeTodo(id)),
   completeTodo: id => dispatch(completeTodo(id)),
   addTodo: todo => dispatch(addTodo(todo)),
-  displayEditField: id => dispatch(showEdit(id)),
-  addDescription: (id, description) =>
-    dispatch(addDescription(id, description)),
-  editTitle: (id, title) => dispatch(editTitle(id, title)),
   setError: () => dispatch(setError())
 });
 
