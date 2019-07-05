@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import Main from './components/Main';
+import AppRouter from './router/AppRouter';
 
 const App = () => {
   return (
     <div className="App">
-      <Main />
+      <AppRouter />
     </div>
   );
 };
