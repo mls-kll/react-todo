@@ -29,3 +29,7 @@ export const editTitle = (id, title) => ({
   id,
   title
 });
+
+export const setError = () => ({
+  type: 'SET_ERROR'
+});

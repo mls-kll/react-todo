@@ -30,23 +30,16 @@ const defaultState = {
 const todos = (state = defaultState, action) => {
   switch (action.type) {
     case 'ADD_TODO':
-      if (action.todo.length < 1) {
-        return {
-          ...state,
-          isError: true
-        };
-      } else {
-        const newTodo = {
-          title: action.todo,
-          isCompleted: false,
-          id: uuidv4()
-        };
-        return {
-          ...state,
-          todos: [...state.todos, newTodo],
-          isError: false
-        };
-      }
+      const newTodo = {
+        title: action.todo,
+        isCompleted: false,
+        id: uuidv4()
+      };
+      return {
+        ...state,
+        todos: [...state.todos, newTodo],
+        isError: false
+      };
 
     case 'REMOVE_TODO':
       return {
@@ -86,6 +79,11 @@ const todos = (state = defaultState, action) => {
             ? { ...todo, title: action.title, showEdit: false }
             : todo
         )
+      };
+    case 'SET_ERROR':
+      return {
+        ...state,
+        isError: true
       };
     default:
       return state;

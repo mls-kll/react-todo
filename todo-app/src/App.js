@@ -8,7 +8,8 @@ import {
   addTodo,
   showEdit,
   addDescription,
-  editTitle
+  editTitle,
+  setError
 } from './actions/index';
 
 const App = ({
@@ -20,7 +21,8 @@ const App = ({
   addTodo,
   displayEditField,
   addDescription,
-  editTitle
+  editTitle,
+  setError
 }) => {
   let todoInput;
   let descriptionInput;
@@ -32,7 +34,7 @@ const App = ({
           className="todo-main-form bg-light"
           onSubmit={event => {
             event.preventDefault();
-            addTodo(todoInput.value);
+            todoInput.value.length < 1 ? setError() : addTodo(todoInput.value);
             todoInput.value = '';
           }}
         >
@@ -81,7 +83,8 @@ const mapDispatchToProps = dispatch => ({
   displayEditField: id => dispatch(showEdit(id)),
   addDescription: (id, description) =>
     dispatch(addDescription(id, description)),
-  editTitle: (id, title) => dispatch(editTitle(id, title))
+  editTitle: (id, title) => dispatch(editTitle(id, title)),
+  setError: () => dispatch(setError())
 });
 
 export default connect(
