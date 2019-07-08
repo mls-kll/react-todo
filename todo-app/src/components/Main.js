@@ -19,6 +19,20 @@ class Main extends React.Component {
   render() {
     const { todos, removeTodo, completeTodo } = this.props;
     const { query } = this.state;
+    const filteredTodos = todos.map(
+      todo =>
+        todo.title.toLowerCase().includes(query.toLowerCase()) && (
+          <Todo
+            key={todo.id}
+            id={todo.id}
+            title={todo.title}
+            isCompleted={todo.isCompleted}
+            handleComplete={() => completeTodo(todo.id)}
+            removeTodo={() => removeTodo(todo.id)}
+          />
+        )
+    );
+
     return (
       <div className="Main">
         <div className="todo-wrapper border rounded">
@@ -31,25 +45,17 @@ class Main extends React.Component {
             />
             <i className="fas fa-search ml-2" />
           </div>
+          <hr />
           <div className="add-todo-icon-container">
             <Link to="/create">
               <i className="create-todo fas fa-plus text-primary" />
             </Link>
           </div>
-
           <ul className="list-group list-group-flush">
-            {todos.map(
-              todo =>
-                todo.title.includes(this.state.query.toLowerCase()) && (
-                  <Todo
-                    key={todo.id}
-                    id={todo.id}
-                    title={todo.title}
-                    isCompleted={todo.isCompleted}
-                    handleComplete={() => completeTodo(todo.id)}
-                    removeTodo={() => removeTodo(todo.id)}
-                  />
-                )
+            {filteredTodos.includes(false) ? (
+              <div>no resoult found</div>
+            ) : (
+              filteredTodos
             )}
           </ul>
         </div>

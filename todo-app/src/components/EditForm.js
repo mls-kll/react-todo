@@ -1,8 +1,14 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { addDescription, editTitle, setError } from '../actions/index';
+import {
+  addDescription,
+  editTitle,
+  setError,
+  resetError
+} from '../actions/index';
 import InputError from './InputError';
+import Discard from './Discard';
 
 class EditForm extends React.Component {
   constructor(props) {
@@ -23,18 +29,25 @@ class EditForm extends React.Component {
     const { id, title, description } = this.state;
     const { setError, editTitle, addDescription, history } = this.props;
 
-    addDescription(id, description);
+    if (title.length < 1) {
+      setError();
+    } else {
+      editTitle(id, title);
+      addDescription(id, description);
+      history.push('/');
+    }
+  };
 
-    return (
-      title.length < 1 ? setError() : editTitle(id, title), history.push('/')
-    );
+  handleDiscard = () => {
+    const { error, resetError, history } = this.props;
+    error && resetError();
+    history.push('/');
   };
 
   render() {
     const { title, description } = this.state;
     return (
       <div>
-        {console.log(this.props)}
         <form
           onSubmit={this.handleSubmit}
           className="edit-todo-form border rounded bg-light"
@@ -61,9 +74,7 @@ class EditForm extends React.Component {
           </div>
           <div className="edit-button-container mt-3">
             <button className="btn btn-warning">save</button>
-            <Link className="btn btn-secondary" to="/">
-              discard
-            </Link>
+            <Discard />
           </div>
         </form>
         {this.props.error && <InputError />}
@@ -82,7 +93,8 @@ const mapDispatchToProps = dispatch => ({
   addDescription: (id, description) =>
     dispatch(addDescription(id, description)),
   editTitle: (id, title) => dispatch(editTitle(id, title)),
-  setError: () => dispatch(setError())
+  setError: () => dispatch(setError()),
+  resetError: () => dispatch(resetError())
 });
 
 const EditFormWithRouter = withRouter(EditForm);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import InputError from './InputError';
+import Discard from './Discard';
 
 import { addTodo, setError } from '../actions/index';
 
@@ -14,12 +14,12 @@ const CreateTodo = ({ history, addTodo, setError, error }) => {
         className="edit-todo-form border rounded bg-light"
         onSubmit={event => {
           event.preventDefault();
-          return (
-            titleInput.value.length < 1
-              ? setError()
-              : addTodo(titleInput.value, descriptionInput.value),
-            history.push('/')
-          );
+          if (titleInput.value.length < 1) {
+            setError();
+          } else {
+            addTodo(titleInput.value, descriptionInput.value);
+            history.push('/');
+          }
         }}
       >
         <div className="edit-field mb-2">
@@ -32,9 +32,7 @@ const CreateTodo = ({ history, addTodo, setError, error }) => {
         </div>
         <div className="edit-button-container mt-3">
           <button className="btn btn-primary ml-5 mb-1">add todo</button>
-          <Link className="btn btn-secondary" to="/">
-            discard
-          </Link>
+          <Discard />
         </div>
       </form>
       {error && <InputError />}

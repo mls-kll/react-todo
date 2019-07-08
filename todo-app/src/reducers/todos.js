@@ -78,7 +78,11 @@ const todos = (state = defaultState, action) => {
         ...state,
         isError: true
       };
-
+      case 'RESET_ERROR':
+        return {
+          ...state,
+          isError: false
+        };
     default:
       return state;
   }
