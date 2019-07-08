@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { addDescription, editTitle, setError } from '../actions/index';
 import InputError from './InputError';
-import { tsImportEqualsDeclaration } from '@babel/types';
 
 class EditForm extends React.Component {
   constructor(props) {
@@ -71,8 +70,7 @@ class EditForm extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    error: state.isError,
-    errorMessage: state.errorMessage
+    error: state.isError
   };
 };
 
