@@ -78,6 +78,7 @@ const todos = (state = defaultState, action) => {
         ...state,
         isError: true
       };
+
     default:
       return state;
   }

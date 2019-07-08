@@ -14,10 +14,12 @@ const CreateTodo = ({ history, addTodo, setError, error }) => {
         className="edit-todo-form border rounded bg-light"
         onSubmit={event => {
           event.preventDefault();
-          titleInput.value.length < 1
-            ? setError()
-            : addTodo(titleInput.value, descriptionInput.value);
-          history.push('/');
+          return (
+            titleInput.value.length < 1
+              ? setError()
+              : addTodo(titleInput.value, descriptionInput.value),
+            history.push('/')
+          );
         }}
       >
         <div className="edit-field mb-2">
