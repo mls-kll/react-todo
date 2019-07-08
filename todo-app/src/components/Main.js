@@ -8,30 +8,23 @@ class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      query: ''
+      query: '',
+      todos: this.props.todos,
+      filteredTodos: []
     };
   }
 
   handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+    const query = event.target.value.toLowerCase();
+    this.setState({
+      [event.target.name]: query,
+      filteredTodos: this.state.todos.filter(todo => todo.title.includes(query))
+    });
   };
 
   render() {
-    const { todos, removeTodo, completeTodo } = this.props;
-    const { query } = this.state;
-    const filteredTodos = todos.map(
-      todo =>
-        todo.title.toLowerCase().includes(query.toLowerCase()) && (
-          <Todo
-            key={todo.id}
-            id={todo.id}
-            title={todo.title}
-            isCompleted={todo.isCompleted}
-            handleComplete={() => completeTodo(todo.id)}
-            removeTodo={() => removeTodo(todo.id)}
-          />
-        )
-    );
+    const { removeTodo, completeTodo } = this.props;
+    const { query, filteredTodos } = this.state;
 
     return (
       <div className="Main">
@@ -52,11 +45,22 @@ class Main extends React.Component {
             </Link>
           </div>
           <ul className="list-group list-group-flush">
-            {filteredTodos.includes(false) ? (
+            {/*filteredTodos.includes(false) ? (
               <div>no resoult found</div>
             ) : (
               filteredTodos
-            )}
+            )*/}
+
+            {filteredTodos.map(todo => (
+              <Todo
+                key={todo.id}
+                id={todo.id}
+                title={todo.title}
+                isCompleted={todo.isCompleted}
+                handleComplete={() => completeTodo(todo.id)}
+                removeTodo={() => removeTodo(todo.id)}
+              />
+            ))}
           </ul>
         </div>
       </div>
