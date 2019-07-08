@@ -23,8 +23,7 @@ const defaultState = {
       showEdit: false
     }
   ],
-  isError: false,
-  errorMessage: 'your input field is empty'
+  isError: false
 };
 
 const todos = (state = defaultState, action) => {
@@ -66,12 +65,12 @@ const todos = (state = defaultState, action) => {
         )
       };
     case 'EDIT_TITLE':
-      console.log(action.id);
       return {
         ...state,
         todos: state.todos.map(todo =>
           todo.id == action.id ? { ...todo, title: action.title } : todo
-        )
+        ),
+        isError: false
       };
     case 'SET_ERROR':
       return {

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Todo from './Todo';
+import InputError from './InputError';
 import { removeTodo, completeTodo, addTodo, setError } from '../actions/index';
 
 const Main = ({
@@ -40,7 +41,7 @@ const Main = ({
             />
           ))}
         </ul>
-        {error && <div className="alert alert-danger">{errorMessage}</div>}
+        {error && <InputError />}
       </div>
     </div>
   );

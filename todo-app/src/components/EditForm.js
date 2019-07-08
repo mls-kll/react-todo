@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { addDescription, editTitle } from '../actions/index';
+import { addDescription, editTitle, setError } from '../actions/index';
+import InputError from './InputError';
+import { tsImportEqualsDeclaration } from '@babel/types';
 
 class EditForm extends React.Component {
   constructor(props) {
@@ -21,12 +23,9 @@ class EditForm extends React.Component {
     event.preventDefault();
     const { id, title, description } = this.state;
 
-    description.length > 1
-      ? this.props.addDescription(id, description)
-      : console.log('error');
-    description.length > 1
-      ? this.props.editTitle(id, title)
-      : console.log('error');
+    this.props.addDescription(id, description);
+
+    title.length < 1 ? this.props.setError() : this.props.editTitle(id, title);
   };
 
   render() {
@@ -64,6 +63,7 @@ class EditForm extends React.Component {
             </Link>
           </div>
         </form>
+        {this.props.error && <InputError />}
       </div>
     );
   }
@@ -79,7 +79,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   addDescription: (id, description) =>
     dispatch(addDescription(id, description)),
-  editTitle: (id, title) => dispatch(editTitle(id, title))
+  editTitle: (id, title) => dispatch(editTitle(id, title)),
+  setError: () => dispatch(setError())
 });
 
 export default connect(
