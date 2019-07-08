@@ -1,11 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Todo from './Todo';
-import InputError from './InputError';
-import { removeTodo, completeTodo, setError } from '../actions/index';
+import { removeTodo, completeTodo } from '../actions/index';
 import { Link } from 'react-router-dom';
 
-const Main = ({ todos, error, removeTodo, completeTodo }) => {
+const Main = ({ todos, removeTodo, completeTodo }) => {
   return (
     <div className="Main">
       <div className="todo-wrapper border rounded">
@@ -27,7 +26,6 @@ const Main = ({ todos, error, removeTodo, completeTodo }) => {
             />
           ))}
         </ul>
-        {error && <InputError />}
       </div>
     </div>
   );
@@ -35,15 +33,13 @@ const Main = ({ todos, error, removeTodo, completeTodo }) => {
 
 const mapStateToProps = state => {
   return {
-    todos: state.todos,
-    error: state.isError
+    todos: state.todos
   };
 };
 
 const mapDispatchToProps = dispatch => ({
   removeTodo: id => dispatch(removeTodo(id)),
-  completeTodo: id => dispatch(completeTodo(id)),
-  setError: () => dispatch(setError())
+  completeTodo: id => dispatch(completeTodo(id))
 });
 
 export default connect(

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { addDescription, editTitle, setError } from '../actions/index';
 import InputError from './InputError';
@@ -10,7 +10,7 @@ class EditForm extends React.Component {
     this.state = {
       id: props.id,
       title: props.todo.title,
-      description: props.todo.description,
+      description: props.todo.description
     };
   }
 
@@ -25,12 +25,14 @@ class EditForm extends React.Component {
     this.props.addDescription(id, description);
 
     title.length < 1 ? this.props.setError() : this.props.editTitle(id, title);
+    this.props.history.push('/');
   };
 
   render() {
     const { title, description } = this.state;
     return (
       <div>
+        {console.log(this.props)}
         <form
           onSubmit={this.handleSubmit}
           className="edit-todo-form border rounded bg-light"
@@ -81,7 +83,9 @@ const mapDispatchToProps = dispatch => ({
   setError: () => dispatch(setError())
 });
 
+const EditFormWithRouter = withRouter(EditForm);
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(EditForm);
+)(EditFormWithRouter);

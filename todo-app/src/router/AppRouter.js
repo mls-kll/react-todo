@@ -1,13 +1,13 @@
 import React from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
-import createHistory from 'history/createBrowserHistory';
+import history from './history';
 
 import Main from '../components/Main';
 import EditTodo from '../components/EditTodo';
 import NotFound from '../components/NotFound';
 import CreateTodo from '../components/CreateTodo';
 
-const history = createHistory();
+/* export const history = createHistory(); */
 
 const AppRouter = () => (
   <Router history={history}>

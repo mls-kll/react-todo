@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import InputError from './InputError';
 
 import { addTodo, setError } from '../actions/index';
 
-const CreateTodo = ({ addTodo, setError }) => {
+const CreateTodo = ({ history, addTodo, setError, error }) => {
   let titleInput;
   let descriptionInput;
   return (
@@ -16,7 +17,7 @@ const CreateTodo = ({ addTodo, setError }) => {
           titleInput.value.length < 1
             ? setError()
             : addTodo(titleInput.value, descriptionInput.value);
-          titleInput.value = '';
+          history.push('/');
         }}
       >
         <div className="edit-field mb-2">
@@ -34,6 +35,7 @@ const CreateTodo = ({ addTodo, setError }) => {
           </Link>
         </div>
       </form>
+      {error && <InputError />}
     </div>
   );
 };
