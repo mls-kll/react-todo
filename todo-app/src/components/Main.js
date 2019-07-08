@@ -8,6 +8,10 @@ const Main = ({ todos, removeTodo, completeTodo }) => {
   return (
     <div className="Main">
       <div className="todo-wrapper border rounded">
+        <div className="m-2">
+          <input type="text" />
+          <i className="fas fa-search ml-2" />
+        </div>
         <div className="add-todo-icon-container">
           <Link to="/create">
             <i className="create-todo fas fa-plus text-primary" />
