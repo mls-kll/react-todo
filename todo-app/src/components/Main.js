@@ -2,33 +2,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Todo from './Todo';
 import InputError from './InputError';
-import { removeTodo, completeTodo, addTodo, setError } from '../actions/index';
+import { removeTodo, completeTodo, setError } from '../actions/index';
+import { Link } from 'react-router-dom';
 
-const Main = ({
-  todos,
-  error,
-  errorMessage,
-  removeTodo,
-  completeTodo,
-  addTodo,
-  setError
-}) => {
-  let todoInput;
-
+const Main = ({ todos, error, removeTodo, completeTodo }) => {
   return (
     <div className="Main">
       <div className="todo-wrapper border rounded">
-        <form
-          className="todo-main-form bg-light"
-          onSubmit={event => {
-            event.preventDefault();
-            todoInput.value.length < 1 ? setError() : addTodo(todoInput.value);
-            todoInput.value = '';
-          }}
-        >
-          <input type="text" ref={node => (todoInput = node)} />
-          <button className="btn btn-primary ml-5 mb-1">add todo</button>
-        </form>
+        <div className="add-todo-icon-container">
+          <Link to="/create">
+            <i className="create-todo fas fa-plus text-primary" />
+          </Link>
+        </div>
+
         <ul className="list-group list-group-flush">
           {todos.map(todo => (
             <Todo
@@ -50,15 +36,13 @@ const Main = ({
 const mapStateToProps = state => {
   return {
     todos: state.todos,
-    error: state.isError,
-    errorMessage: state.errorMessage
+    error: state.isError
   };
 };
 
 const mapDispatchToProps = dispatch => ({
   removeTodo: id => dispatch(removeTodo(id)),
   completeTodo: id => dispatch(completeTodo(id)),
-  addTodo: todo => dispatch(addTodo(todo)),
   setError: () => dispatch(setError())
 });
 

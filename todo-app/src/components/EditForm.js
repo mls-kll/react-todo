@@ -10,7 +10,7 @@ class EditForm extends React.Component {
     this.state = {
       id: props.id,
       title: props.todo.title,
-      description: props.todo.description
+      description: props.todo.description,
     };
   }
 

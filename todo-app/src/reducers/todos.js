@@ -30,7 +30,8 @@ const todos = (state = defaultState, action) => {
   switch (action.type) {
     case 'ADD_TODO':
       const newTodo = {
-        title: action.todo,
+        title: action.title,
+        description: action.description,
         isCompleted: false,
         id: uuidv4()
       };

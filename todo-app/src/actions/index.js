@@ -1,6 +1,7 @@
-export const addTodo = todo => ({
+export const addTodo = (title, description) => ({
   type: 'ADD_TODO',
-  todo
+  title,
+  description
 });
 
 export const completeTodo = id => ({

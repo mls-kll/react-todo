@@ -49,3 +49,16 @@
   display: flex;
   justify-content: space-between;
 }
+
+.add-todo-icon-container{
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding: 15px;
+}
+
+.create-todo{
+  font-size: 30px;
+  cursor: pointer;
+}
+
