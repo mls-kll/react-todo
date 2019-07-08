@@ -29,7 +29,7 @@ class Main extends React.Component {
 
   render() {
     const { removeTodo, completeTodo } = this.props;
-    const { query, filteredTodos, displayError } = this.state;
+    const { query, filteredTodos } = this.state;
 
     return (
       <div className="Main">
