@@ -9,22 +9,27 @@ class Main extends React.Component {
     super(props);
     this.state = {
       query: '',
-      todos: this.props.todos,
-      filteredTodos: []
+      filteredTodos: this.props.todos
     };
   }
 
   handleChange = event => {
     const query = event.target.value.toLowerCase();
     this.setState({
-      [event.target.name]: query,
-      filteredTodos: this.state.todos.filter(todo => todo.title.includes(query))
+      [event.target.name]: query
     });
+    this.state.query.length > -1
+      ? this.setState({
+          filteredTodos: this.props.todos.filter(todo =>
+            todo.title.includes(query)
+          )
+        })
+      : this.setState({ filteredTodos: this.props.todos });
   };
 
   render() {
     const { removeTodo, completeTodo } = this.props;
-    const { query, filteredTodos } = this.state;
+    const { query, filteredTodos, displayError } = this.state;
 
     return (
       <div className="Main">
@@ -45,12 +50,6 @@ class Main extends React.Component {
             </Link>
           </div>
           <ul className="list-group list-group-flush">
-            {/*filteredTodos.includes(false) ? (
-              <div>no resoult found</div>
-            ) : (
-              filteredTodos
-            )*/}
-
             {filteredTodos.map(todo => (
               <Todo
                 key={todo.id}
@@ -62,6 +61,7 @@ class Main extends React.Component {
               />
             ))}
           </ul>
+          {filteredTodos.length < 1 && <div>Todo not found</div>}
         </div>
       </div>
     );
