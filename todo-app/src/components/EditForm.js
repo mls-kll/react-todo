@@ -1,12 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import {
-  addDescription,
-  editTitle,
-  setError,
-  resetError
-} from '../actions/index';
+import { addDescription, editTitle, setError } from '../actions/index';
 import InputError from './InputError';
 import Discard from './Discard';
 
@@ -36,12 +31,6 @@ class EditForm extends React.Component {
       addDescription(id, description);
       history.push('/');
     }
-  };
-
-  handleDiscard = () => {
-    const { error, resetError, history } = this.props;
-    error && resetError();
-    history.push('/');
   };
 
   render() {
@@ -93,8 +82,7 @@ const mapDispatchToProps = dispatch => ({
   addDescription: (id, description) =>
     dispatch(addDescription(id, description)),
   editTitle: (id, title) => dispatch(editTitle(id, title)),
-  setError: () => dispatch(setError()),
-  resetError: () => dispatch(resetError())
+  setError: () => dispatch(setError())
 });
 
 const EditFormWithRouter = withRouter(EditForm);
