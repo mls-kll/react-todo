@@ -10,7 +10,8 @@ export const startAddTodo = (title, description) => {
     const newTodo = {
       id: uuidv4(),
       title,
-      description
+      description,
+      isCompleted: false
     };
 
     const todos = getState().todos;
@@ -27,10 +28,34 @@ export const completeTodo = id => ({
   id
 });
 
+export const startCompleteTodo = id => {
+  return (dispatch, getState) => {
+    const todos = getState().todos;
+    const updatedTodos = todos.map(todo =>
+      todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo
+    );
+
+    return new Promise((resolve, reject) => {
+      resolve(localStorage.setItem('todos', JSON.stringify(updatedTodos)));
+    }).then(() => dispatch(completeTodo(id)));
+  };
+};
+
 export const removeTodo = id => ({
   type: 'REMOVE_TODO',
   id
 });
+
+export const startRemoveTodo = id => {
+  return (dispatch, getState) => {
+    const todos = getState().todos;
+    const updatedTodos = todos.filter(todo => todo.id !== id);
+
+    return new Promise((resolve, reject) => {
+      resolve(localStorage.setItem('todos', JSON.stringify(updatedTodos)));
+    }).then(() => dispatch(removeTodo(id)));
+  };
+};
 
 export const addDescription = (id, description) => ({
   type: 'ADD_DESCRIPTION',
@@ -51,3 +76,17 @@ export const setError = () => ({
 export const resetError = () => ({
   type: 'RESET_ERROR'
 });
+
+export const initializeTodos = todos => ({
+  type: 'INITALIZE_TODOS',
+  todos
+});
+
+export const startInitializeTodos = () => {
+  return dispatch => {
+    const newTodos = localStorage.getItem('todos');
+    return new Promise((resolve, reject) => resolve(newTodos)).then(() =>
+      dispatch(initializeTodos(JSON.parse(newTodos)))
+    );
+  };
+};

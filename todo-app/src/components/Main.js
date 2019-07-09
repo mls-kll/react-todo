@@ -1,48 +1,40 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Todo from './Todo';
-import { removeTodo, completeTodo } from '../actions/index';
+import {
+  startRemoveTodo,
+  startCompleteTodo,
+  startInitializeTodos
+} from '../actions/index';
 import { Link } from 'react-router-dom';
 
 class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      query: ''
-      /* filteredTodos: this.props.todos */
+      todos: []
     };
   }
-  /* 
-  handleChange = event => {
-    const query = event.target.value.toLowerCase();
-    this.setState({
-      [event.target.name]: query
-    });
-    this.state.query.length > -1
-      ? this.setState({
-          filteredTodos: this.props.todos.filter(todo =>
-            todo.title.includes(query)
-          )
-        })
-      : this.setState({ filteredTodos: this.props.todos });
-  }; */
+
+  componentDidMount() {
+    const { reduxTodos, startInitializeTodos } = this.props;
+    const localStorageTodos = JSON.parse(localStorage.getItem('todos'));
+
+    reduxTodos.length < 1 && localStorageTodos && startInitializeTodos();
+
+    localStorageTodos &&
+      this.setState(prevState => ({
+        todos: [...prevState.todos, ...localStorageTodos]
+      }));
+  }
 
   render() {
-    const { removeTodo, completeTodo, todos } = this.props;
-    const { query, filteredTodos } = this.state;
+    const { startRemoveTodo, startCompleteTodo } = this.props;
+    const { todos } = this.state;
 
     return (
       <div className="Main">
         <div className="todo-wrapper border rounded">
-          <div className="m-2">
-            {/* <input
-              type="text"
-              name="query"
-              onChange={event => this.handleChange(event)}
-              value={query}
-            /> */}
-            <i className="fas fa-search ml-2" />
-          </div>
           <hr />
           <div className="add-todo-icon-container">
             <Link to="/create">
@@ -56,12 +48,11 @@ class Main extends React.Component {
                 id={todo.id}
                 title={todo.title}
                 isCompleted={todo.isCompleted}
-                handleComplete={() => completeTodo(todo.id)}
-                removeTodo={() => removeTodo(todo.id)}
+                handleComplete={() => startCompleteTodo(todo.id)}
+                removeTodo={() => startRemoveTodo(todo.id)}
               />
             ))}
           </ul>
-          {/* filteredTodos.length < 1 && <div>Todo not found</div> */}
         </div>
       </div>
     );
@@ -70,13 +61,14 @@ class Main extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    todos: state.todos
+    reduxTodos: state.todos
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  removeTodo: id => dispatch(removeTodo(id)),
-  completeTodo: id => dispatch(completeTodo(id))
+  startRemoveTodo: id => dispatch(startRemoveTodo(id)),
+  startCompleteTodo: id => dispatch(startCompleteTodo(id)),
+  startInitializeTodos: () => dispatch(startInitializeTodos())
 });
 
 export default connect(

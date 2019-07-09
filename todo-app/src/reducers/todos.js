@@ -1,4 +1,3 @@
-const uuidv4 = require('uuid/v4');
 const defaultState = {
   todos: [],
   isError: false
@@ -6,6 +5,12 @@ const defaultState = {
 
 const todos = (state = defaultState, action) => {
   switch (action.type) {
+    case 'INITALIZE_TODOS':
+      return {
+        ...state,
+        todos: action.todos
+      };
+
     case 'ADD_TODO':
       return {
         ...state,
@@ -18,6 +23,7 @@ const todos = (state = defaultState, action) => {
         ...state,
         todos: state.todos.filter(todo => todo.id !== action.id)
       };
+
     case 'COMPLETE_TODO':
       return {
         ...state,
@@ -32,24 +38,27 @@ const todos = (state = defaultState, action) => {
       return {
         ...state,
         todos: state.todos.map(todo =>
-          todo.id == action.id
+          todo.id === action.id
             ? { ...todo, description: action.description }
             : todo
         )
       };
+
     case 'EDIT_TITLE':
       return {
         ...state,
         todos: state.todos.map(todo =>
-          todo.id == action.id ? { ...todo, title: action.title } : todo
+          todo.id === action.id ? { ...todo, title: action.title } : todo
         ),
         isError: false
       };
+
     case 'SET_ERROR':
       return {
         ...state,
         isError: true
       };
+
     case 'RESET_ERROR':
       return {
         ...state,
