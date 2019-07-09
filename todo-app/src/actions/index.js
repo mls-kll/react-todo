@@ -19,7 +19,9 @@ export const startAddTodo = (title, description) => {
 
     return new Promise((resolve, reject) => {
       resolve(localStorage.setItem('todos', JSON.stringify(newTodos)));
-    }).then(() => dispatch(addTodo(newTodo)));
+    })
+      .then(() => dispatch(addTodo(newTodo)))
+      .catch(error => console.log(error));
   };
 };
 
@@ -37,7 +39,9 @@ export const startCompleteTodo = id => {
 
     return new Promise((resolve, reject) => {
       resolve(localStorage.setItem('todos', JSON.stringify(updatedTodos)));
-    }).then(() => dispatch(completeTodo(id)));
+    })
+      .then(() => dispatch(completeTodo(id)))
+      .catch(error => console.log(error));
   };
 };
 
@@ -67,12 +71,14 @@ export const startAddDescription = (id, description) => {
   return (dispatch, getState) => {
     const todos = getState().todos;
     const updatedTodos = todos.map(todo =>
-      todo.id === id ? { ...todo, description: description } : todo
+      todo.id === id ? { ...todo, description } : todo
     );
 
     return new Promise((resolve, reject) => {
       resolve(localStorage.setItem('todos', JSON.stringify(updatedTodos)));
-    }).then(() => dispatch(addDescription(id, description)));
+    })
+      .then(() => dispatch(addDescription(id, description)))
+      .catch(error => console.log(error));
   };
 };
 
@@ -81,6 +87,21 @@ export const editTitle = (id, title) => ({
   id,
   title
 });
+
+export const startEditTitle = (id, title) => {
+  return (dispatch, getState) => {
+    const todos = getState().todos;
+    const updatedTodos = todos.map(todo =>
+      todo.id === id ? { ...todo, title } : todo
+    );
+
+    return new Promise((resolve, reject) => {
+      resolve(localStorage.setItem('todos', JSON.stringify(updatedTodos)));
+    })
+      .then(() => dispatch(editTitle(id, title)))
+      .catch(error => console.log(error));
+  };
+};
 
 export const setError = () => ({
   type: 'SET_ERROR'
@@ -98,8 +119,8 @@ export const initializeTodos = todos => ({
 export const startInitializeTodos = () => {
   return dispatch => {
     const newTodos = localStorage.getItem('todos');
-    return new Promise((resolve, reject) => resolve(newTodos)).then(() =>
-      dispatch(initializeTodos(JSON.parse(newTodos)))
-    );
+    return new Promise((resolve, reject) => resolve(newTodos))
+      .then(() => dispatch(initializeTodos(JSON.parse(newTodos))))
+      .catch(error => console.log(error));
   };
 };

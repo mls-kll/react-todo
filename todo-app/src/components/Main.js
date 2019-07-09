@@ -28,6 +28,16 @@ class Main extends React.Component {
       }));
   }
 
+  componentDidUpdate(prevProps) {
+    const newProps = this.props;
+    const localStorageTodos = JSON.parse(localStorage.getItem('todos'));
+
+    newProps !== prevProps &&
+      this.setState({
+        todos: localStorageTodos
+      });
+  }
+
   render() {
     const { startRemoveTodo, startCompleteTodo } = this.props;
     const { todos } = this.state;
