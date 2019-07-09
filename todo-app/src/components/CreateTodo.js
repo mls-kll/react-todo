@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import InputError from './InputError';
 import Discard from './Discard';
 
-import { addTodo, setError } from '../actions/index';
+import { startAddTodo, setError } from '../actions/index';
 
-const CreateTodo = ({ history, addTodo, setError, error }) => {
+const CreateTodo = ({ history, startAddTodo, setError, error }) => {
   let titleInput;
   let descriptionInput;
   return (
@@ -17,7 +17,7 @@ const CreateTodo = ({ history, addTodo, setError, error }) => {
           if (titleInput.value.length < 1) {
             setError();
           } else {
-            addTodo(titleInput.value, descriptionInput.value);
+            startAddTodo(titleInput.value, descriptionInput.value);
             history.push('/');
           }
         }}
@@ -47,7 +47,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  addTodo: (title, description) => dispatch(addTodo(title, description)),
+  startAddTodo: (title, description) =>
+    dispatch(startAddTodo(title, description)),
   setError: () => dispatch(setError())
 });
 

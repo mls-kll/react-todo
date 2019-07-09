@@ -1,8 +1,26 @@
-export const addTodo = (title, description) => ({
+const uuidv4 = require('uuid/v4');
+
+export const addTodo = todo => ({
   type: 'ADD_TODO',
-  title,
-  description
+  todo
 });
+
+export const startAddTodo = (title, description) => {
+  return (dispatch, getState) => {
+    const newTodo = {
+      id: uuidv4(),
+      title,
+      description
+    };
+
+    const todos = getState().todos;
+    const newTodos = [...todos, newTodo];
+
+    return new Promise((resolve, reject) => {
+      resolve(localStorage.setItem('todos', JSON.stringify(newTodos)));
+    }).then(() => dispatch(addTodo(newTodo)));
+  };
+};
 
 export const completeTodo = id => ({
   type: 'COMPLETE_TODO',

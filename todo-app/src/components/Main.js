@@ -8,11 +8,11 @@ class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      query: '',
-      filteredTodos: this.props.todos
+      query: ''
+      /* filteredTodos: this.props.todos */
     };
   }
-
+  /* 
   handleChange = event => {
     const query = event.target.value.toLowerCase();
     this.setState({
@@ -25,22 +25,22 @@ class Main extends React.Component {
           )
         })
       : this.setState({ filteredTodos: this.props.todos });
-  };
+  }; */
 
   render() {
-    const { removeTodo, completeTodo } = this.props;
+    const { removeTodo, completeTodo, todos } = this.props;
     const { query, filteredTodos } = this.state;
 
     return (
       <div className="Main">
         <div className="todo-wrapper border rounded">
           <div className="m-2">
-            <input
+            {/* <input
               type="text"
               name="query"
               onChange={event => this.handleChange(event)}
               value={query}
-            />
+            /> */}
             <i className="fas fa-search ml-2" />
           </div>
           <hr />
@@ -50,7 +50,7 @@ class Main extends React.Component {
             </Link>
           </div>
           <ul className="list-group list-group-flush">
-            {filteredTodos.map(todo => (
+            {todos.map(todo => (
               <Todo
                 key={todo.id}
                 id={todo.id}
@@ -61,7 +61,7 @@ class Main extends React.Component {
               />
             ))}
           </ul>
-          {filteredTodos.length < 1 && <div>Todo not found</div>}
+          {/* filteredTodos.length < 1 && <div>Todo not found</div> */}
         </div>
       </div>
     );

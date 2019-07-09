@@ -1,43 +1,15 @@
 const uuidv4 = require('uuid/v4');
 const defaultState = {
-  todos: [
-    {
-      id: 0,
-      title: 'todo 1',
-      isCompleted: false,
-      description: 'SSS',
-      showEdit: false
-    },
-    {
-      id: 1,
-      title: 'todo 2',
-      isCompleted: true,
-      description: 'todo 2 description',
-      showEdit: false
-    },
-    {
-      id: 2,
-      title: 'todo 3',
-      isCompleted: false,
-      description: 'todo 3 description',
-      showEdit: false
-    }
-  ],
+  todos: [],
   isError: false
 };
 
 const todos = (state = defaultState, action) => {
   switch (action.type) {
     case 'ADD_TODO':
-      const newTodo = {
-        title: action.title,
-        description: action.description,
-        isCompleted: false,
-        id: uuidv4()
-      };
       return {
         ...state,
-        todos: [...state.todos, newTodo],
+        todos: [...state.todos, action.todo],
         isError: false
       };
 
@@ -78,11 +50,11 @@ const todos = (state = defaultState, action) => {
         ...state,
         isError: true
       };
-      case 'RESET_ERROR':
-        return {
-          ...state,
-          isError: false
-        };
+    case 'RESET_ERROR':
+      return {
+        ...state,
+        isError: false
+      };
     default:
       return state;
   }
