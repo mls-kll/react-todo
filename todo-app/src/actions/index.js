@@ -63,6 +63,19 @@ export const addDescription = (id, description) => ({
   description
 });
 
+export const startAddDescription = (id, description) => {
+  return (dispatch, getState) => {
+    const todos = getState().todos;
+    const updatedTodos = todos.map(todo =>
+      todo.id === id ? { ...todo, description: description } : todo
+    );
+
+    return new Promise((resolve, reject) => {
+      resolve(localStorage.setItem('todos', JSON.stringify(updatedTodos)));
+    }).then(() => dispatch(addDescription(id, description)));
+  };
+};
+
 export const editTitle = (id, title) => ({
   type: 'EDIT_TITLE',
   id,

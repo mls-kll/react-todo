@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { addDescription, editTitle, setError } from '../actions/index';
+import { startAddDescription, editTitle, setError } from '../actions/index';
 import InputError from './InputError';
 import Discard from './Discard';
 
@@ -22,13 +22,13 @@ class EditForm extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
     const { id, title, description } = this.state;
-    const { setError, editTitle, addDescription, history } = this.props;
+    const { setError, editTitle, startAddDescription, history } = this.props;
 
     if (title.length < 1) {
       setError();
     } else {
       editTitle(id, title);
-      addDescription(id, description);
+      startAddDescription(id, description);
       history.push('/');
     }
   };
@@ -79,8 +79,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  addDescription: (id, description) =>
-    dispatch(addDescription(id, description)),
+  startAddDescription: (id, description) =>
+    dispatch(startAddDescription(id, description)),
   editTitle: (id, title) => dispatch(editTitle(id, title)),
   setError: () => dispatch(setError())
 });
