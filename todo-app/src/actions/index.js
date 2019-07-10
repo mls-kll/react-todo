@@ -53,13 +53,16 @@ export const removeTodo = id => ({
 });
 
 export const startRemoveTodo = id => {
-  return (dispatch, getState) => {
-    const todos = getState().todos;
-    const updatedTodos = todos.filter(todo => todo.id !== id);
-
-    return new Promise((resolve, reject) => {
-      resolve(localStorage.setItem('todos', JSON.stringify(updatedTodos)));
-    }).then(() => dispatch(removeTodo(id)));
+  return dispatch => {
+    return fetch(`http://localhost:8080/todos/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(() => dispatch(removeTodo(id)))
+      .catch(error => console.log(error));
   };
 };
 
