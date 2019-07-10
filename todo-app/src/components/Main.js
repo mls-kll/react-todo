@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Todo from './Todo';
+import InputError from './InputError';
 import {
   startRemoveTodo,
   startCompleteTodo,
@@ -106,7 +107,7 @@ class Main extends React.Component {
             ))}
           </ul>
         </div>
-        {isMatch < 1 && <div>Todo not found</div>}
+        {isMatch < 1 && <InputError errorMessage='Todo not found'/>}
       </div>
     );
   }

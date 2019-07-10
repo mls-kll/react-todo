@@ -35,7 +35,7 @@ const CreateTodo = ({ history, startAddTodo, setError, error }) => {
           <Discard />
         </div>
       </form>
-      {error && <InputError />}
+      {error && <InputError errorMessage='Title field is empty'/>}
     </div>
   );
 };
