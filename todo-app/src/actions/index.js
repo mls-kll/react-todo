@@ -66,28 +66,29 @@ export const startRemoveTodo = id => {
   };
 };
 
-export const editTodo = (id, description, title) => ({
+export const editTodo = (id, title, description) => ({
   type: 'EDIT_TODO',
   id,
+  title,
   description
 });
 
 export const startEditTodo = (id, title, description) => {
-  return (dispatch, getState) => {
-    const todos = getState().todos;
-    const updatedTodos = todos.map(todo =>
-      todo.id === id ? { ...todo, title, description } : todo
-    );
-
-    return new Promise((resolve, reject) => {
-      resolve(localStorage.setItem('todos', JSON.stringify(updatedTodos)));
+  return dispatch => {
+    return fetch(`http://localhost:8080/todos/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify({ title, description }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
+      .then(response => response.json())
       .then(() => dispatch(editTodo(id, title, description)))
       .catch(error => console.log(error));
   };
 };
 
-export const editTitle = (id, title, description) => ({
+/* export const editTitle = (id, title, description) => ({
   type: 'EDIT_TITLE',
   id,
   title
@@ -106,7 +107,7 @@ export const startEditTitle = (id, title) => {
       .then(() => dispatch(editTitle(id, title)))
       .catch(error => console.log(error));
   };
-};
+}; */
 
 export const setError = () => ({
   type: 'SET_ERROR'
