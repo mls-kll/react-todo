@@ -33,7 +33,7 @@ class EditForm extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
     const { id, title, description } = this.state;
-    const { setError, startEditTitle, startEditTodo, history } = this.props;
+    const { setError, startEditTodo, history } = this.props;
 
     if (title.length < 1) {
       setError();

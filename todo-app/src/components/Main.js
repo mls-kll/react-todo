@@ -37,7 +37,9 @@ class Main extends React.Component {
 
     newProps !== prevProps &&
       this.setState({
-        todos: localStorageTodos
+        todos: localStorageTodos,
+        filteredTodos: localStorageTodos,
+        isMatch: true
       });
   }
 
@@ -47,6 +49,19 @@ class Main extends React.Component {
     this.setState({
       [event.target.name]: query
     });
+
+    const isFilterable = this.state.todos.filter(todo =>
+      todo.title.includes(query)
+    );
+
+    isFilterable.length < 1
+      ? this.setState({ isMatch: false })
+      : this.setState({ isMatch: true });
+
+    query.length < 1
+      ? this.setState({ isMatch: true })
+      : this.setState({ isMatch: false });
+
     this.state.query.length > -1
       ? this.setState({
           filteredTodos: this.state.todos.filter(todo =>
@@ -58,7 +73,7 @@ class Main extends React.Component {
 
   render() {
     const { startRemoveTodo, startCompleteTodo } = this.props;
-    const { todos, query, filteredTodos } = this.state;
+    const { query, filteredTodos, isMatch } = this.state;
 
     return (
       <div className="Main">
@@ -91,6 +106,7 @@ class Main extends React.Component {
             ))}
           </ul>
         </div>
+        {isMatch < 1 && <div>Todo not found</div>}
       </div>
     );
   }
