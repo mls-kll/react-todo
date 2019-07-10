@@ -61,28 +61,28 @@ export const startRemoveTodo = id => {
   };
 };
 
-export const addDescription = (id, description) => ({
-  type: 'ADD_DESCRIPTION',
+export const editTodo = (id, description, title) => ({
+  type: 'EDIT_TODO',
   id,
   description
 });
 
-export const startAddDescription = (id, description) => {
+export const startEditTodo = (id, title, description) => {
   return (dispatch, getState) => {
     const todos = getState().todos;
     const updatedTodos = todos.map(todo =>
-      todo.id === id ? { ...todo, description } : todo
+      todo.id === id ? { ...todo, title, description } : todo
     );
 
     return new Promise((resolve, reject) => {
       resolve(localStorage.setItem('todos', JSON.stringify(updatedTodos)));
     })
-      .then(() => dispatch(addDescription(id, description)))
+      .then(() => dispatch(editTodo(id, title, description)))
       .catch(error => console.log(error));
   };
 };
 
-export const editTitle = (id, title) => ({
+export const editTitle = (id, title, description) => ({
   type: 'EDIT_TITLE',
   id,
   title
@@ -94,7 +94,7 @@ export const startEditTitle = (id, title) => {
     const updatedTodos = todos.map(todo =>
       todo.id === id ? { ...todo, title } : todo
     );
-
+    console.log(updatedTodos);
     return new Promise((resolve, reject) => {
       resolve(localStorage.setItem('todos', JSON.stringify(updatedTodos)));
     })

@@ -1,11 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import {
-  startAddDescription,
-  startEditTitle,
-  setError
-} from '../actions/index';
+import { startEditTodo, setError } from '../actions/index';
 import InputError from './InputError';
 import Discard from './Discard';
 
@@ -13,10 +9,21 @@ class EditForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: props.id,
-      title: props.todo.title,
-      description: props.todo.description
+      id: '',
+      title: '',
+      description: ''
     };
+  }
+
+  componentDidMount() {
+    const localStorageTodos = JSON.parse(localStorage.getItem('todos'));
+    const todo = localStorageTodos.filter(todo => todo.id === this.props.id)[0];
+
+    this.setState({
+      id: todo.id,
+      title: todo.title,
+      description: todo.description
+    });
   }
 
   handleChange = event => {
@@ -26,18 +33,12 @@ class EditForm extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
     const { id, title, description } = this.state;
-    const {
-      setError,
-      startEditTitle,
-      startAddDescription,
-      history
-    } = this.props;
+    const { setError, startEditTitle, startEditTodo, history } = this.props;
 
     if (title.length < 1) {
       setError();
     } else {
-      startEditTitle(id, title);
-      startAddDescription(id, description);
+      startEditTodo(id, title, description);
       history.push('/');
     }
   };
@@ -88,9 +89,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  startAddDescription: (id, description) =>
-    dispatch(startAddDescription(id, description)),
-  startEditTitle: (id, title) => dispatch(startEditTitle(id, title)),
+  startEditTodo: (id, title, description) =>
+    dispatch(startEditTodo(id, title, description)),
   setError: () => dispatch(setError())
 });
 

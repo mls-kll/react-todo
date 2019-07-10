@@ -34,12 +34,12 @@ const todos = (state = defaultState, action) => {
         )
       };
 
-    case 'ADD_DESCRIPTION':
+    case 'EDIT_TODO':
       return {
         ...state,
         todos: state.todos.map(todo =>
           todo.id === action.id
-            ? { ...todo, description: action.description }
+            ? { ...todo, title: action.title, description: action.description }
             : todo
         )
       };
