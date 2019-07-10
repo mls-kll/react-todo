@@ -118,9 +118,9 @@ export const initializeTodos = todos => ({
 
 export const startInitializeTodos = () => {
   return dispatch => {
-    const newTodos = localStorage.getItem('todos');
-    return new Promise((resolve, reject) => resolve(newTodos))
-      .then(() => dispatch(initializeTodos(JSON.parse(newTodos))))
+    fetch('http://localhost:8080/todos')
+      .then(response => response.json())
+      .then(data => dispatch(initializeTodos(data.todos)))
       .catch(error => console.log(error));
   };
 };

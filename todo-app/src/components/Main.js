@@ -8,6 +8,7 @@ import {
   startInitializeTodos
 } from '../actions/index';
 import { Link } from 'react-router-dom';
+import { stat } from 'fs';
 
 class Main extends React.Component {
   constructor(props) {
@@ -15,31 +16,22 @@ class Main extends React.Component {
     this.state = {
       todos: [],
       filteredTodos: [],
-      query: ''
+      query: '',
+      isMatch: false
     };
   }
 
   componentDidMount() {
-    const { reduxTodos, startInitializeTodos } = this.props;
-    const localStorageTodos = JSON.parse(localStorage.getItem('todos'));
-
-    reduxTodos.length < 1 && localStorageTodos && startInitializeTodos();
-
-    localStorageTodos &&
-      this.setState(prevState => ({
-        todos: [...prevState.todos, ...localStorageTodos],
-        filteredTodos: [...prevState.filteredTodos, ...localStorageTodos]
-      }));
+    this.props.startInitializeTodos();
   }
 
   componentDidUpdate(prevProps) {
     const newProps = this.props;
-    const localStorageTodos = JSON.parse(localStorage.getItem('todos'));
 
     newProps !== prevProps &&
       this.setState({
-        todos: localStorageTodos,
-        filteredTodos: localStorageTodos,
+        todos: this.props.todos,
+        filteredTodos: this.props.todos,
         isMatch: true
       });
   }
@@ -59,9 +51,7 @@ class Main extends React.Component {
       ? this.setState({ isMatch: false })
       : this.setState({ isMatch: true });
 
-    query.length < 1
-      ? this.setState({ isMatch: true })
-      : this.setState({ isMatch: false });
+    query.length < 1 && this.setState({ isMatch: true });
 
     this.state.query.length > -1
       ? this.setState({
@@ -94,20 +84,22 @@ class Main extends React.Component {
               <i className="create-todo fas fa-plus text-primary" />
             </Link>
           </div>
-          <ul className="list-group list-group-flush">
-            {filteredTodos.map(todo => (
-              <Todo
-                key={todo.id}
-                id={todo.id}
-                title={todo.title}
-                isCompleted={todo.isCompleted}
-                handleComplete={() => startCompleteTodo(todo.id)}
-                removeTodo={() => startRemoveTodo(todo.id)}
-              />
-            ))}
-          </ul>
+          {
+            <ul className="list-group list-group-flush">
+              {filteredTodos.map(todo => (
+                <Todo
+                  key={todo.id}
+                  id={todo.id}
+                  title={todo.title}
+                  isCompleted={todo.isCompleted}
+                  handleComplete={() => startCompleteTodo(todo.id)}
+                  removeTodo={() => startRemoveTodo(todo.id)}
+                />
+              ))}
+            </ul>
+          }
         </div>
-        {isMatch < 1 && <InputError errorMessage='Todo not found'/>}
+        {isMatch < 1 && <InputError errorMessage="Todo not found" />}
       </div>
     );
   }
@@ -115,7 +107,7 @@ class Main extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    reduxTodos: state.todos
+    todos: state.todos
   };
 };
 
