@@ -12,7 +12,9 @@ class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      todos: []
+      todos: [],
+      filteredTodos: [],
+      query: ''
     };
   }
 
@@ -24,7 +26,8 @@ class Main extends React.Component {
 
     localStorageTodos &&
       this.setState(prevState => ({
-        todos: [...prevState.todos, ...localStorageTodos]
+        todos: [...prevState.todos, ...localStorageTodos],
+        filteredTodos: [...prevState.filteredTodos, ...localStorageTodos]
       }));
   }
 
@@ -38,13 +41,37 @@ class Main extends React.Component {
       });
   }
 
+  handleChange = event => {
+    const query = event.target.value.toLowerCase();
+
+    this.setState({
+      [event.target.name]: query
+    });
+    this.state.query.length > -1
+      ? this.setState({
+          filteredTodos: this.state.todos.filter(todo =>
+            todo.title.includes(query)
+          )
+        })
+      : this.setState({ filteredTodos: this.state.todos });
+  };
+
   render() {
     const { startRemoveTodo, startCompleteTodo } = this.props;
-    const { todos } = this.state;
+    const { todos, query, filteredTodos } = this.state;
 
     return (
       <div className="Main">
         <div className="todo-wrapper border rounded">
+          <div className="m-2">
+            <input
+              type="text"
+              name="query"
+              onChange={event => this.handleChange(event)}
+              value={query}
+            />
+            <i className="fas fa-search ml-2" />
+          </div>
           <hr />
           <div className="add-todo-icon-container">
             <Link to="/create">
@@ -52,7 +79,7 @@ class Main extends React.Component {
             </Link>
           </div>
           <ul className="list-group list-group-flush">
-            {todos.map(todo => (
+            {filteredTodos.map(todo => (
               <Todo
                 key={todo.id}
                 id={todo.id}
