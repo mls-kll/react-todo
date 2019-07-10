@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-const todos = [
+let todos = [
   {
     id: '0ceb1eb9-26d8-4ea8-b831-d99575a78e02',
     title: 'etesd meg a kecskédet',
@@ -46,6 +46,15 @@ app.post('/todo', (req, res) => {
   };
   todos.push(newTodo);
   console.log(todos);
+  res.send(todos);
+});
+
+app.delete('/todos/:id', (req, res) => {
+  const { id } = req.params;
+
+  const updatedTodos = todos.filter(todo => todo.id !== id);
+  todos = updatedTodos;
+
   res.send(todos);
 });
 
