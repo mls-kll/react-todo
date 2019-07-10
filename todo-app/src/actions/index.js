@@ -6,20 +6,22 @@ export const addTodo = todo => ({
 });
 
 export const startAddTodo = (title, description) => {
-  return (dispatch, getState) => {
+  return dispatch => {
     const newTodo = {
       id: uuidv4(),
       title,
-      description,
+      description: description ? description : '',
       isCompleted: false
     };
 
-    const todos = getState().todos;
-    const newTodos = [...todos, newTodo];
-
-    return new Promise((resolve, reject) => {
-      resolve(localStorage.setItem('todos', JSON.stringify(newTodos)));
+    return fetch('http://localhost:8080/todo', {
+      method: 'POST',
+      body: JSON.stringify(newTodo),
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
+      .then(response => response.json())
       .then(() => dispatch(addTodo(newTodo)))
       .catch(error => console.log(error));
   };
@@ -120,7 +122,7 @@ export const startInitializeTodos = () => {
   return dispatch => {
     fetch('http://localhost:8080/todos')
       .then(response => response.json())
-      .then(data => dispatch(initializeTodos(data.todos)))
+      .then(data => dispatch(initializeTodos(data)))
       .catch(error => console.log(error));
   };
 };

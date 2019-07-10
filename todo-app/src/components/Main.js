@@ -8,7 +8,6 @@ import {
   startInitializeTodos
 } from '../actions/index';
 import { Link } from 'react-router-dom';
-import { stat } from 'fs';
 
 class Main extends React.Component {
   constructor(props) {
