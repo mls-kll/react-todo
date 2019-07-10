@@ -1,5 +1,19 @@
 const uuidv4 = require('uuid/v4');
 
+export const initializeTodos = todos => ({
+  type: 'INITALIZE_TODOS',
+  todos
+});
+
+export const startInitializeTodos = () => {
+  return dispatch => {
+    fetch('http://localhost:8080/todos')
+      .then(response => response.json())
+      .then(data => dispatch(initializeTodos(data)))
+      .catch(error => console.log(error));
+  };
+};
+
 export const addTodo = todo => ({
   type: 'ADD_TODO',
   todo
@@ -33,15 +47,14 @@ export const completeTodo = id => ({
 });
 
 export const startCompleteTodo = id => {
-  return (dispatch, getState) => {
-    const todos = getState().todos;
-    const updatedTodos = todos.map(todo =>
-      todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo
-    );
-
-    return new Promise((resolve, reject) => {
-      resolve(localStorage.setItem('todos', JSON.stringify(updatedTodos)));
+  return dispatch => {
+    return fetch(`http://localhost:8080/todo/complete/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
+      .then(response => response.json())
       .then(() => dispatch(completeTodo(id)))
       .catch(error => console.log(error));
   };
@@ -88,27 +101,6 @@ export const startEditTodo = (id, title, description) => {
   };
 };
 
-/* export const editTitle = (id, title, description) => ({
-  type: 'EDIT_TITLE',
-  id,
-  title
-});
-
-export const startEditTitle = (id, title) => {
-  return (dispatch, getState) => {
-    const todos = getState().todos;
-    const updatedTodos = todos.map(todo =>
-      todo.id === id ? { ...todo, title } : todo
-    );
-    console.log(updatedTodos);
-    return new Promise((resolve, reject) => {
-      resolve(localStorage.setItem('todos', JSON.stringify(updatedTodos)));
-    })
-      .then(() => dispatch(editTitle(id, title)))
-      .catch(error => console.log(error));
-  };
-}; */
-
 export const setError = () => ({
   type: 'SET_ERROR'
 });
@@ -116,17 +108,3 @@ export const setError = () => ({
 export const resetError = () => ({
   type: 'RESET_ERROR'
 });
-
-export const initializeTodos = todos => ({
-  type: 'INITALIZE_TODOS',
-  todos
-});
-
-export const startInitializeTodos = () => {
-  return dispatch => {
-    fetch('http://localhost:8080/todos')
-      .then(response => response.json())
-      .then(data => dispatch(initializeTodos(data)))
-      .catch(error => console.log(error));
-  };
-};

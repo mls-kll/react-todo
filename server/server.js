@@ -60,6 +60,18 @@ app.put('/todos/:id', (req, res) => {
   res.send(todos);
 });
 
+app.put('/todo/complete/:id', (req, res) => {
+  const { id } = req.params;
+
+  const updatedTodos = todos.map(todo =>
+    todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo
+  );
+
+  todos = updatedTodos;
+
+  res.send(todos);
+});
+
 app.delete('/todos/:id', (req, res) => {
   const { id } = req.params;
 
