@@ -49,6 +49,20 @@ app.post('/todo', (req, res) => {
   res.send(todos);
 });
 
+app.put('/todos/:id', (req, res) => {
+  const { id } = req.params;
+  const { title, description } = req.body;
+
+  const updatedTodos = todos.filter(todo => todo.id !== id);
+  console.log(updatedTodos);
+
+  res.send(todos);
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is up on port ${PORT}`);
+});
+
 app.delete('/todos/:id', (req, res) => {
   const { id } = req.params;
 
