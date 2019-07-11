@@ -21,7 +21,7 @@ class Discard extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    error: state.isError
+    error: state.errors.isError
   };
 };
 

@@ -65,7 +65,7 @@ class Main extends React.Component {
 const mapStateToProps = state => {
   return {
     todos: state.todos,
-    query: state.query
+    query: state.filters.query
   };
 };
 

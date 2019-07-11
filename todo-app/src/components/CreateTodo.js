@@ -42,7 +42,7 @@ const CreateTodo = ({ history, startAddTodo, setError, error }) => {
 
 const mapStateToProps = state => {
   return {
-    error: state.isError
+    error: state.errors.isError
   };
 };
 
