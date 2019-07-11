@@ -5,7 +5,7 @@ const Todo = ({ title, isCompleted, handleComplete, removeTodo, id }) => {
   return (
     <li className="list-group-item">
       <div className="todo-list-item">
-        <span>
+        <span className='mr-2'>
           <i
             onClick={handleComplete}
             className={
