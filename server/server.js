@@ -35,7 +35,6 @@ app.get('/todos', (req, res) => {
 
 app.post('/todo', (req, res) => {
   const { id, title, description, isCompleted } = req.body;
-  console.log(req.body);
   const newTodo = {
     id,
     title,
@@ -43,7 +42,6 @@ app.post('/todo', (req, res) => {
     isCompleted
   };
   todos.push(newTodo);
-  console.log(todos);
   res.send(todos);
 });
 
@@ -51,7 +49,7 @@ app.put('/todos/:id', (req, res) => {
   const { id } = req.params;
   const { title, description } = req.body;
 
-  const updatedTodos = todos.map(todo =>
+  updatedTodos = todos.map(todo =>
     todo.id === id ? { ...todo, title, description } : todo
   );
 

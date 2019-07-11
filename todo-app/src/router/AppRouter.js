@@ -7,8 +7,6 @@ import EditTodo from '../components/EditTodo';
 import NotFound from '../components/NotFound';
 import CreateTodo from '../components/CreateTodo';
 
-/* export const history = createHistory(); */
-
 const AppRouter = () => (
   <Router history={history}>
     <Switch>

@@ -101,6 +101,11 @@ export const startEditTodo = (id, title, description) => {
   };
 };
 
+export const filterTodos = query => ({
+  type: 'FILTER_TODOS',
+  query
+});
+
 export const setError = () => ({
   type: 'SET_ERROR'
 });

@@ -5,65 +5,24 @@ import InputError from './InputError';
 import {
   startRemoveTodo,
   startCompleteTodo,
-  startInitializeTodos
+  startInitializeTodos,
+  filterTodos
 } from '../actions/index';
 import { Link } from 'react-router-dom';
 
 class Main extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      todos: [],
-      filteredTodos: [],
-      query: '',
-      isMatch: false
-    };
-  }
-
   componentDidMount() {
-    this.props.startInitializeTodos();
+    this.props.todos.length < 1 && this.props.startInitializeTodos();
   }
-
-  componentDidUpdate(prevProps) {
-    const newProps = this.props;
-
-    newProps !== prevProps &&
-      this.setState({
-        todos: this.props.todos,
-        filteredTodos: this.props.todos,
-        isMatch: true
-      });
-  }
-
-  handleChange = event => {
-    const query = event.target.value.toLowerCase();
-
-    this.setState({
-      [event.target.name]: query
-    });
-
-    const isFilterable = this.state.todos.filter(todo =>
-      todo.title.includes(query)
-    );
-
-    isFilterable.length < 1
-      ? this.setState({ isMatch: false })
-      : this.setState({ isMatch: true });
-
-    query.length < 1 && this.setState({ isMatch: true });
-
-    this.state.query.length > -1
-      ? this.setState({
-          filteredTodos: this.state.todos.filter(todo =>
-            todo.title.includes(query)
-          )
-        })
-      : this.setState({ filteredTodos: this.state.todos });
-  };
 
   render() {
-    const { startRemoveTodo, startCompleteTodo } = this.props;
-    const { query, filteredTodos, isMatch } = this.state;
+    const {
+      startRemoveTodo,
+      startCompleteTodo,
+      filterTodos,
+      query,
+      todos
+    } = this.props;
 
     return (
       <div className="Main">
@@ -72,7 +31,7 @@ class Main extends React.Component {
             <input
               type="text"
               name="query"
-              onChange={event => this.handleChange(event)}
+              onChange={event => filterTodos(event.target.value)}
               value={query}
             />
             <i className="fas fa-search ml-2" />
@@ -85,7 +44,7 @@ class Main extends React.Component {
           </div>
           {
             <ul className="list-group list-group-flush">
-              {filteredTodos.map(todo => (
+              {todos.map(todo => (
                 <Todo
                   key={todo.id}
                   id={todo.id}
@@ -98,7 +57,6 @@ class Main extends React.Component {
             </ul>
           }
         </div>
-        {isMatch < 1 && <InputError errorMessage="Todo not found" />}
       </div>
     );
   }
@@ -106,14 +64,16 @@ class Main extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    todos: state.todos
+    todos: state.todos,
+    query: state.query
   };
 };
 
 const mapDispatchToProps = dispatch => ({
   startRemoveTodo: id => dispatch(startRemoveTodo(id)),
   startCompleteTodo: id => dispatch(startCompleteTodo(id)),
-  startInitializeTodos: () => dispatch(startInitializeTodos())
+  startInitializeTodos: () => dispatch(startInitializeTodos()),
+  filterTodos: query => dispatch(filterTodos(query))
 });
 
 export default connect(

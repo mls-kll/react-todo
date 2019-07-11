@@ -16,8 +16,7 @@ class EditForm extends React.Component {
   }
 
   componentDidMount() {
-    const localStorageTodos = JSON.parse(localStorage.getItem('todos'));
-    const todo = localStorageTodos.filter(todo => todo.id === this.props.id)[0];
+    const todo = this.props.todos.filter(todo => todo.id === this.props.id)[0];
 
     this.setState({
       id: todo.id,
@@ -65,7 +64,7 @@ class EditForm extends React.Component {
               <span>description</span>
               <textarea
                 name="description"
-                onChange={this.handleChange}
+                onChange={event => this.handleChange(event)}
                 type="text"
                 value={description}
               />
@@ -84,7 +83,8 @@ class EditForm extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    error: state.isError
+    error: state.isError,
+    todos: state.todos
   };
 };
 
