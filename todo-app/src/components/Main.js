@@ -55,6 +55,9 @@ class Main extends React.Component {
               ))}
             </ul>
           }
+          {filteredTodos && filteredTodos.length < 1 && (
+            <InputError errorMessage="todo not found" />
+          )}
         </div>
       </div>
     );
