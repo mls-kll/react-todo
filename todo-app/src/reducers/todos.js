@@ -1,7 +1,7 @@
 const todos = (state = [], action) => {
   switch (action.type) {
     case 'INITALIZE_TODOS':
-      return action.todos;
+      return action.todos ? [...action.todos] : action.todos;
 
     case 'ADD_TODO':
       return [...state, action.todo];
@@ -22,7 +22,7 @@ const todos = (state = [], action) => {
           ? { ...todo, title: action.title, description: action.description }
           : todo
       );
-
+      
     default:
       return state;
   }

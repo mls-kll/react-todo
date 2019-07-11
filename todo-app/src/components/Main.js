@@ -5,7 +5,7 @@ import {
   startRemoveTodo,
   startCompleteTodo,
   startInitializeTodos,
-  filterTodos
+  startFilterTodos
 } from '../actions/index';
 import { Link } from 'react-router-dom';
 import InputError from './InputError';
@@ -19,8 +19,8 @@ class Main extends React.Component {
     const {
       startRemoveTodo,
       startCompleteTodo,
-      filterTodos,
-      query,
+      startFilterTodos,
+      filteredTodos,
       todos
     } = this.props;
 
@@ -31,8 +31,7 @@ class Main extends React.Component {
             <input
               type="text"
               name="query"
-              onChange={event => filterTodos(event.target.value)}
-              value={query}
+              onChange={event => startFilterTodos(event.target.value)}
             />
             <i className="fas fa-search ml-2" />
           </div>
@@ -44,19 +43,16 @@ class Main extends React.Component {
           </div>
           {
             <ul className="list-group list-group-flush">
-              {todos.map(
-                todo =>
-                  todo.title.toLowerCase().includes(query.toLowerCase()) && (
-                    <Todo
-                      key={todo.id}
-                      id={todo.id}
-                      title={todo.title}
-                      isCompleted={todo.isCompleted}
-                      handleComplete={() => startCompleteTodo(todo.id)}
-                      removeTodo={() => startRemoveTodo(todo.id)}
-                    />
-                  )
-              )}
+              {(filteredTodos || todos).map(todo => (
+                <Todo
+                  key={todo.id}
+                  id={todo.id}
+                  title={todo.title}
+                  isCompleted={todo.isCompleted}
+                  handleComplete={() => startCompleteTodo(todo.id)}
+                  removeTodo={() => startRemoveTodo(todo.id)}
+                />
+              ))}
             </ul>
           }
         </div>
@@ -68,7 +64,7 @@ class Main extends React.Component {
 const mapStateToProps = state => {
   return {
     todos: state.todos,
-    query: state.filters.query
+    filteredTodos: state.filters.filteredTodos
   };
 };
 
@@ -76,7 +72,7 @@ const mapDispatchToProps = dispatch => ({
   startRemoveTodo: id => dispatch(startRemoveTodo(id)),
   startCompleteTodo: id => dispatch(startCompleteTodo(id)),
   startInitializeTodos: () => dispatch(startInitializeTodos()),
-  filterTodos: query => dispatch(filterTodos(query))
+  startFilterTodos: query => dispatch(startFilterTodos(query))
 });
 
 export default connect(

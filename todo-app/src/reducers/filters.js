@@ -1,13 +1,14 @@
 const defaultState = {
-  query: ''
+  filteredTodos: null
 };
 
 const filters = (state = defaultState, action) => {
   switch (action.type) {
     case 'FILTER_TODOS':
       return {
-        ...state,
-        query: action.query
+        filteredTodos: action.filteredTodos
+          ? [...action.filteredTodos]
+          : action.filteredTodos
       };
     default:
       return state;

@@ -101,10 +101,20 @@ export const startEditTodo = (id, title, description) => {
   };
 };
 
-export const filterTodos = query => ({
+export const filterTodos = filteredTodos => ({
   type: 'FILTER_TODOS',
-  query
+  filteredTodos
 });
+
+export const startFilterTodos = query => {
+  return (dispatch, getState) => {
+    const todos = getState().todos;
+    const filteredTodos = query ? todos.filter(todo =>
+      todo.title.toLowerCase().includes(query.toLowerCase())
+    ) : null;
+    return dispatch(filterTodos(filteredTodos));
+  };
+};
 
 export const setError = () => ({
   type: 'SET_ERROR'
