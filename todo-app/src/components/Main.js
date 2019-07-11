@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Todo from './Todo';
-import InputError from './InputError';
 import {
   startRemoveTodo,
   startCompleteTodo,
@@ -9,6 +8,7 @@ import {
   filterTodos
 } from '../actions/index';
 import { Link } from 'react-router-dom';
+import InputError from './InputError';
 
 class Main extends React.Component {
   componentDidMount() {
@@ -44,16 +44,19 @@ class Main extends React.Component {
           </div>
           {
             <ul className="list-group list-group-flush">
-              {todos.map(todo => (
-                <Todo
-                  key={todo.id}
-                  id={todo.id}
-                  title={todo.title}
-                  isCompleted={todo.isCompleted}
-                  handleComplete={() => startCompleteTodo(todo.id)}
-                  removeTodo={() => startRemoveTodo(todo.id)}
-                />
-              ))}
+              {todos.map(
+                todo =>
+                  todo.title.toLowerCase().includes(query.toLowerCase()) && (
+                    <Todo
+                      key={todo.id}
+                      id={todo.id}
+                      title={todo.title}
+                      isCompleted={todo.isCompleted}
+                      handleComplete={() => startCompleteTodo(todo.id)}
+                      removeTodo={() => startRemoveTodo(todo.id)}
+                    />
+                  )
+              )}
             </ul>
           }
         </div>
