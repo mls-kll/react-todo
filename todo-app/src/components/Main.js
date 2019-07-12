@@ -12,7 +12,7 @@ import InputError from './InputError';
 
 class Main extends React.Component {
   componentDidMount() {
-    this.props.todos.length < 1 && this.props.startInitializeTodos();
+    !this.props.hasLoaded && this.props.startInitializeTodos();
   }
 
   render() {
@@ -23,7 +23,6 @@ class Main extends React.Component {
       filteredTodos,
       todos
     } = this.props;
-
     return (
       <div className="Main">
         <div className="todo-wrapper border rounded">
@@ -66,7 +65,8 @@ class Main extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    todos: state.todos,
+    todos: state.todos.todos,
+    hasLoaded: state.todos.hasLoaded,
     filteredTodos: state.filters.filteredTodos
   };
 };

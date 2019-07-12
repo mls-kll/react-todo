@@ -1,28 +1,46 @@
-const todos = (state = [], action) => {
+const defaultState = {
+  todos: [],
+  hasLoaded: false
+};
+
+const todos = (state = defaultState, action) => {
   switch (action.type) {
     case 'INITALIZE_TODOS':
-      return action.todos ? [...action.todos] : action.todos;
+      return {
+        ...state,
+        hasLoaded: true,
+        todos: action.todos
+      };
 
     case 'ADD_TODO':
-      return [...state, action.todo];
+      return { ...state, todos: [...state.todos, action.todo] };
 
     case 'REMOVE_TODO':
-      return state.filter(todo => todo.id !== action.id);
+      return {
+        ...state,
+        todos: state.todos.filter(todo => todo.id !== action.id)
+      };
 
     case 'COMPLETE_TODO':
-      return state.map(todo =>
-        todo.id === action.id
-          ? { ...todo, isCompleted: !todo.isCompleted }
-          : todo
-      );
+      return {
+        ...state,
+        todos: state.todos.map(todo =>
+          todo.id === action.id
+            ? { ...todo, isCompleted: !todo.isCompleted }
+            : todo
+        )
+      };
 
     case 'EDIT_TODO':
-      return state.map(todo =>
-        todo.id === action.id
-          ? { ...todo, title: action.title, description: action.description }
-          : todo
-      );
-      
+      return {
+        ...state,
+        todos: state.todos.map(todo =>
+          todo.id === action.id
+            ? { ...todo, title: action.title, description: action.description }
+            : todo
+        )
+      };
+
     default:
       return state;
   }

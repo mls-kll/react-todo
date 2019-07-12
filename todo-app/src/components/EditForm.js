@@ -84,7 +84,7 @@ class EditForm extends React.Component {
 const mapStateToProps = state => {
   return {
     error: state.errors.isError,
-    todos: state.todos
+    todos: state.todos.todos
   };
 };
 

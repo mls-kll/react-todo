@@ -9,7 +9,7 @@ const EditTodo = ({ todo, id }) => {
 
 const mapStateToProps = (state, route) => {
   return {
-    todo: state.todos.find(todo => todo.id === route.match.params.id),
+    todo: state.todos.todos.find(todo => todo.id === route.match.params.id),
     id: route.match.params.id
   };
 };
