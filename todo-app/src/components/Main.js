@@ -13,14 +13,6 @@ import { Link } from 'react-router-dom';
 import InputError from './InputError';
 
 class Main extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      timeout: 0
-    };
-  }
-
   componentDidMount() {
     const {
       hasLoaded,
@@ -42,7 +34,7 @@ class Main extends React.Component {
     handleTimeout(
       setTimeout(() => {
         this.props.startFilterTodos(query);
-      }, 1000)
+      }, 500)
     );
   };
 
