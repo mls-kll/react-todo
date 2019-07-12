@@ -5,18 +5,32 @@ import {
   startRemoveTodo,
   startCompleteTodo,
   startInitializeTodos,
-  startFilterTodos
+  startFilterTodos,
+  resetFilter
 } from '../actions/index';
 import { Link } from 'react-router-dom';
 import InputError from './InputError';
 
 class Main extends React.Component {
   componentDidMount() {
-    !this.props.hasLoaded && this.props.startInitializeTodos();
+    const {
+      hasLoaded,
+      startInitializeTodos,
+      hasFiltered,
+      resetFilter
+    } = this.props;
+
+    !hasLoaded && startInitializeTodos();
+    hasFiltered && resetFilter();
   }
 
   handleChange = event => {
     this.props.startFilterTodos(event.target.value);
+    let query = event.target.value;
+
+    setTimeout(() => {
+      this.props.startFilterTodos(query);
+    }, 1000);
   };
 
   render() {
@@ -70,7 +84,8 @@ const mapStateToProps = state => {
   return {
     todos: state.todos.todos,
     hasLoaded: state.todos.hasLoaded,
-    filteredTodos: state.filters.filteredTodos
+    filteredTodos: state.filters.filteredTodos,
+    hasFiltered: state.filters.hasFiltered
   };
 };
 
@@ -78,7 +93,8 @@ const mapDispatchToProps = dispatch => ({
   startRemoveTodo: id => dispatch(startRemoveTodo(id)),
   startCompleteTodo: id => dispatch(startCompleteTodo(id)),
   startInitializeTodos: () => dispatch(startInitializeTodos()),
-  startFilterTodos: query => dispatch(startFilterTodos(query))
+  startFilterTodos: query => dispatch(startFilterTodos(query)),
+  resetFilter: () => dispatch(resetFilter())
 });
 
 export default connect(

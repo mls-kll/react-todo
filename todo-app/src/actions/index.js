@@ -128,6 +128,10 @@ export const startFilterTodos = query => {
   };
 };
 
+export const resetFilter = () => ({
+  type: 'RESET_FILTER'
+});
+
 export const setError = () => ({
   type: 'SET_ERROR'
 });
