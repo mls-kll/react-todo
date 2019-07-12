@@ -1,49 +1,45 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { startEditTodo, setError } from '../actions/index';
+import {
+  startEditTodo,
+  setError,
+  resetError,
+  handleEditTitle,
+  handleEditDescription
+} from '../actions/index';
 import InputError from './InputError';
 import Discard from './Discard';
 
 class EditForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      id: '',
-      title: '',
-      description: ''
-    };
-  }
-
-  componentDidMount() {
-    const todo = this.props.todos.filter(todo => todo.id === this.props.id)[0];
-
-    this.setState({
-      id: todo.id,
-      title: todo.title,
-      description: todo.description
-    });
-  }
-
-  handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
-
   handleSubmit = event => {
     event.preventDefault();
-    const { id, title, description } = this.state;
-    const { setError, startEditTodo, history } = this.props;
+    const {
+      setError,
+      resetError,
+      isError,
+      startEditTodo,
+      history,
+      updatedTitle,
+      updatedDescription,
+      todo
+    } = this.props;
 
-    if (title.length < 1) {
+    console.log('original:', todo.title, 'updating:', updatedTitle);
+    const newTitle = updatedTitle !== null ? updatedTitle : todo.title;
+    if (updatedTitle === '') {
       setError();
     } else {
-      startEditTodo(id, title, description);
+      startEditTodo(todo.id, newTitle, updatedDescription);
+      !isError && resetError();
       history.push('/');
     }
   };
 
   render() {
-    const { title, description } = this.state;
+    const { title, description } = this.props.todo;
+    const { handleEditTitle, handleEditDescription } = this.props;
+
     return (
       <div>
         <form
@@ -55,18 +51,18 @@ class EditForm extends React.Component {
               <span>title</span>
               <input
                 name="title"
-                onChange={event => this.handleChange(event)}
+                onChange={event => handleEditTitle(event.target.value)}
                 type="text"
-                value={title}
+                defaultValue={title}
               />
             </div>
             <div className="edit-field">
               <span>description</span>
               <textarea
                 name="description"
-                onChange={event => this.handleChange(event)}
+                onChange={event => handleEditDescription(event.target.value)}
                 type="text"
-                value={description}
+                defaultValue={description}
               />
             </div>
           </div>
@@ -75,7 +71,7 @@ class EditForm extends React.Component {
             <Discard />
           </div>
         </form>
-        {this.props.error && <InputError />}
+        {this.props.error && <InputError errorMessage="title field is empty" />}
       </div>
     );
   }
@@ -84,14 +80,20 @@ class EditForm extends React.Component {
 const mapStateToProps = state => {
   return {
     error: state.errors.isError,
-    todos: state.todos.todos
+    todos: state.todos.todos,
+    updatedTitle: state.helpers.updatedTitle,
+    updatedDescription: state.helpers.updatedDescription
   };
 };
 
 const mapDispatchToProps = dispatch => ({
   startEditTodo: (id, title, description) =>
     dispatch(startEditTodo(id, title, description)),
-  setError: () => dispatch(setError())
+  setError: () => dispatch(setError()),
+  resetError: () => dispatch(resetError()),
+  handleEditTitle: updatedTitle => dispatch(handleEditTitle(updatedTitle)),
+  handleEditDescription: updatedDescription =>
+    dispatch(handleEditDescription(updatedDescription))
 });
 
 const EditFormWithRouter = withRouter(EditForm);

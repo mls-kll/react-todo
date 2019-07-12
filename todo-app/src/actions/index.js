@@ -79,6 +79,16 @@ export const startRemoveTodo = id => {
   };
 };
 
+export const handleEditTitle = updatedTitle => ({
+  type: 'HANDLE_EDIT_TITLE',
+  updatedTitle
+});
+
+export const handleEditDescription = updatedDescription => ({
+  type: 'HANDLE_EDIT_DESCRIPTION',
+  updatedDescription
+});
+
 export const editTodo = (id, title, description) => ({
   type: 'EDIT_TODO',
   id,
@@ -109,9 +119,11 @@ export const filterTodos = filteredTodos => ({
 export const startFilterTodos = query => {
   return (dispatch, getState) => {
     const todos = getState().todos.todos;
-    const filteredTodos = query ? todos.filter(todo =>
-      todo.title.toLowerCase().includes(query.toLowerCase())
-    ) : null;
+    const filteredTodos = query
+      ? todos.filter(todo =>
+          todo.title.toLowerCase().includes(query.toLowerCase())
+        )
+      : null;
     return dispatch(filterTodos(filteredTodos));
   };
 };
