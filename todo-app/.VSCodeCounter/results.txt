@@ -1,0 +1,56 @@
+Date : 2019-07-12 14:35:07
+Directory : /home/milos/GitRepos/react-todo/todo-app/src
+Total : 25 files,  799 codes, 31 comments, 134 blanks, all 964 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JavaScript |         22 |        729 |         31 |        117 |        877 |
+| CSS        |          2 |         63 |          0 |         16 |         79 |
+| XML        |          1 |          7 |          0 |          1 |          8 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------+------------+------------+------------+------------+------------+
+| path                     | files      | code       | comment    | blank      | total      |
++--------------------------+------------+------------+------------+------------+------------+
+| .                        |         25 |        799 |         31 |        134 |        964 |
+| components               |          9 |        333 |          0 |         48 |        381 |
+| actions                  |          1 |        123 |          0 |         19 |        142 |
+| reducers                 |          5 |        119 |          0 |         21 |        140 |
+| router                   |          2 |         20 |          0 |          4 |         24 |
+| store                    |          1 |          9 |          0 |          4 |         13 |
++--------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------+------------+------------+------------+------------+------------+
+| filename                 | language   | code       | comment    | blank      | total      |
++--------------------------+------------+------------+------------+------------+------------+
+| App.css                  | CSS        |         51 |          0 |         14 |         65 |
+| App.js                   | JavaScript |         11 |          0 |          3 |         14 |
+| App.test.js              | JavaScript |          8 |          0 |          2 |         10 |
+| actions/index.js         | JavaScript |        123 |          0 |         19 |        142 |
+| components/CreateTodo.js | JavaScript |         53 |          0 |          6 |         59 |
+| components/Discard.js    | JavaScript |         31 |          0 |          7 |         38 |
+| components/EditError.js  | JavaScript |          8 |          0 |          3 |         11 |
+| components/EditForm.js   | JavaScript |         95 |          0 |         10 |        105 |
+| components/EditTodo.js   | JavaScript |         17 |          0 |          4 |         21 |
+| components/InputError.js | JavaScript |          5 |          0 |          3 |          8 |
+| components/Main.js       | JavaScript |         94 |          0 |          9 |        103 |
+| components/NotFound.js   | JavaScript |          3 |          0 |          3 |          6 |
+| components/Todo.js       | JavaScript |         27 |          0 |          3 |         30 |
+| index.css                | CSS        |         12 |          0 |          2 |         14 |
+| index.js                 | JavaScript |         14 |          0 |          3 |         17 |
+| logo.svg                 | XML        |          7 |          0 |          1 |          8 |
+| reducers/errors.js       | JavaScript |         20 |          0 |          4 |         24 |
+| reducers/filters.js      | JavaScript |         25 |          0 |          2 |         27 |
+| reducers/helpers.js      | JavaScript |         21 |          0 |          5 |         26 |
+| reducers/index.js        | JavaScript |         11 |          0 |          2 |         13 |
+| reducers/todos.js        | JavaScript |         42 |          0 |          8 |         50 |
+| router/AppRouter.js      | JavaScript |         18 |          0 |          4 |         22 |
+| router/history.js        | JavaScript |          2 |          0 |          0 |          2 |
+| serviceWorker.js         | JavaScript |         92 |         31 |         13 |        136 |
+| store/index.js           | JavaScript |          9 |          0 |          4 |         13 |
+| Total                    |            |        799 |         31 |        134 |        964 |
++--------------------------+------------+------------+------------+------------+------------+

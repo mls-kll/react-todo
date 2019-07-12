@@ -6,12 +6,21 @@ import {
   startCompleteTodo,
   startInitializeTodos,
   startFilterTodos,
-  resetFilter
+  resetFilter,
+  handleTimeout
 } from '../actions/index';
 import { Link } from 'react-router-dom';
 import InputError from './InputError';
 
 class Main extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      timeout: 0
+    };
+  }
+
   componentDidMount() {
     const {
       hasLoaded,
@@ -25,12 +34,16 @@ class Main extends React.Component {
   }
 
   handleChange = event => {
-    this.props.startFilterTodos(event.target.value);
     let query = event.target.value;
+    const { handleTimeout, timer } = this.props;
 
-    setTimeout(() => {
-      this.props.startFilterTodos(query);
-    }, 1000);
+    timer && clearTimeout(timer);
+
+    handleTimeout(
+      setTimeout(() => {
+        this.props.startFilterTodos(query);
+      }, 1000)
+    );
   };
 
   render() {
@@ -43,7 +56,7 @@ class Main extends React.Component {
     return (
       <div className="Main">
         <div className="todo-wrapper border rounded">
-          <div className="m-2">
+          <div className="m-2 text-center">
             <input
               type="text"
               name="query"
@@ -85,7 +98,8 @@ const mapStateToProps = state => {
     todos: state.todos.todos,
     hasLoaded: state.todos.hasLoaded,
     filteredTodos: state.filters.filteredTodos,
-    hasFiltered: state.filters.hasFiltered
+    hasFiltered: state.filters.hasFiltered,
+    timer: state.helpers.timer
   };
 };
 
@@ -94,7 +108,8 @@ const mapDispatchToProps = dispatch => ({
   startCompleteTodo: id => dispatch(startCompleteTodo(id)),
   startInitializeTodos: () => dispatch(startInitializeTodos()),
   startFilterTodos: query => dispatch(startFilterTodos(query)),
-  resetFilter: () => dispatch(resetFilter())
+  resetFilter: () => dispatch(resetFilter()),
+  handleTimeout: timer => dispatch(handleTimeout(timer))
 });
 
 export default connect(

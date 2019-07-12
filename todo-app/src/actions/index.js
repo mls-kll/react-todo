@@ -139,3 +139,8 @@ export const setError = () => ({
 export const resetError = () => ({
   type: 'RESET_ERROR'
 });
+
+export const handleTimeout = timer => ({
+  type: 'HANDLE_TIMEOUT',
+  timer
+});

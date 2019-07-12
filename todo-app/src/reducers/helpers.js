@@ -1,6 +1,7 @@
 const defaultState = {
   updatedTitle: null,
-  updatedDescription: ''
+  updatedDescription: '',
+  timer: null
 };
 
 const helpers = (state = defaultState, action) => {
@@ -16,7 +17,11 @@ const helpers = (state = defaultState, action) => {
         ...state,
         updatedDescription: action.updatedDescription
       };
-
+    case 'HANDLE_TIMEOUT':
+      return {
+        ...state,
+        timer: action.timer
+      };
     default:
       return state;
   }
