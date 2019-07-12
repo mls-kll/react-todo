@@ -108,7 +108,7 @@ export const filterTodos = filteredTodos => ({
 
 export const startFilterTodos = query => {
   return (dispatch, getState) => {
-    const todos = getState().todos;
+    const todos = getState().todos.todos;
     const filteredTodos = query ? todos.filter(todo =>
       todo.title.toLowerCase().includes(query.toLowerCase())
     ) : null;
