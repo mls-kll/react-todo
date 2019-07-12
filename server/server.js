@@ -55,6 +55,11 @@ app.post('/todos/suggestions', (req, res) => {
   const { query } = req.body;
   suggestions = todos.map(todo => todo.title);
   filteredSuggestions = suggestions.filter(todo => todo.includes(query));
+
+  if (filteredSuggestions.length < 1) {
+    filteredSuggestions.push('no match');
+  }
+
   res.json(filteredSuggestions);
 });
 
