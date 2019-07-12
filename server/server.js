@@ -29,6 +29,8 @@ let todos = [
   }
 ];
 
+let suggestions = null;
+
 app.get('/todos', (req, res) => {
   res.json(todos);
 });
@@ -43,6 +45,17 @@ app.post('/todo', (req, res) => {
   };
   todos.push(newTodo);
   res.send(todos);
+});
+
+app.get('/todos/suggestions', (req, res) => {
+  res.json(suggestions);
+});
+
+app.post('/todos/suggestions', (req, res) => {
+  const { query } = req.body;
+  suggestions = todos.map(todo => todo.title);
+  filteredSuggestions = suggestions.filter(todo => todo.includes(query));
+  res.json(filteredSuggestions);
 });
 
 app.put('/todos/:id', (req, res) => {
