@@ -25,8 +25,8 @@ class EditForm extends React.Component {
       todo
     } = this.props;
 
-    console.log('original:', todo.title, 'updating:', updatedTitle);
     const newTitle = updatedTitle !== null ? updatedTitle : todo.title;
+
     if (updatedTitle === '') {
       setError();
     } else {

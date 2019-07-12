@@ -15,11 +15,14 @@ class Main extends React.Component {
     !this.props.hasLoaded && this.props.startInitializeTodos();
   }
 
+  handleChange = event => {
+    this.props.startFilterTodos(event.target.value);
+  };
+
   render() {
     const {
       startRemoveTodo,
       startCompleteTodo,
-      startFilterTodos,
       filteredTodos,
       todos
     } = this.props;
@@ -30,7 +33,7 @@ class Main extends React.Component {
             <input
               type="text"
               name="query"
-              onChange={event => startFilterTodos(event.target.value)}
+              onChange={event => this.handleChange(event)}
             />
             <i className="fas fa-search ml-2" />
           </div>
