@@ -44,21 +44,42 @@
   cursor: pointer;
 }
 
-.edit-button-container{
+.edit-button-container {
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
 
-.add-todo-icon-container{
+.add-todo-icon-container {
   width: 100%;
   display: flex;
   justify-content: flex-end;
   padding: 0 15px;
 }
 
-.create-todo{
+.create-todo {
   font-size: 30px;
   cursor: pointer;
 }
 
+.search-input {
+  width: 250px;
+}
+
+.search-suggestions {
+  width: 250px;
+  border: 1px solid black;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.suggestion{
+  cursor: pointer;
+  transition: 0.3s;
+  width: 100%;
+}
+
+.suggestion:hover {
+  background-color: lightgray;
+}

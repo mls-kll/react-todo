@@ -7,7 +7,8 @@ import {
   startInitializeTodos,
   startFilterTodos,
   resetFilter,
-  handleTimeout
+  handleTimeout,
+  startGetSuggestions
 } from '../actions/index';
 import { Link } from 'react-router-dom';
 import InputError from './InputError';
@@ -27,13 +28,19 @@ class Main extends React.Component {
 
   handleChange = event => {
     let query = event.target.value;
-    const { handleTimeout, timer } = this.props;
+    const {
+      handleTimeout,
+      timer,
+      startFilterTodos,
+      startGetSuggestions
+    } = this.props;
 
     timer && clearTimeout(timer);
 
     handleTimeout(
       setTimeout(() => {
-        this.props.startFilterTodos(query);
+        startFilterTodos(query);
+        startGetSuggestions(query);
       }, 500)
     );
   };
@@ -43,19 +50,33 @@ class Main extends React.Component {
       startRemoveTodo,
       startCompleteTodo,
       filteredTodos,
+      suggestedTodos,
       todos
     } = this.props;
     return (
       <div className="Main">
         <div className="todo-wrapper border rounded">
-          <div className="m-2 text-center">
-            <input
-              type="text"
-              name="query"
-              onChange={event => this.handleChange(event)}
-            />
-            <i className="fas fa-search ml-2" />
+          <div>
+            <div>
+              <input
+                className="search-input"
+                autoComplete="off"
+                type="text"
+                name="query"
+                onChange={event => this.handleChange(event)}
+              />
+              <i className="fas fa-search ml-2" />
+            </div>
+            <ul className="search-suggestions">
+              {suggestedTodos &&
+                suggestedTodos.map((suggestion, index) => (
+                  <li key={index} className="suggestion">
+                    {suggestion}
+                  </li>
+                ))}
+            </ul>
           </div>
+
           <hr />
           <div className="add-todo-icon-container">
             <Link to="/create">
@@ -90,6 +111,7 @@ const mapStateToProps = state => {
     todos: state.todos.todos,
     hasLoaded: state.todos.hasLoaded,
     filteredTodos: state.filters.filteredTodos,
+    suggestedTodos: state.filters.suggestedTodos,
     hasFiltered: state.filters.hasFiltered,
     timer: state.helpers.timer
   };
@@ -101,7 +123,8 @@ const mapDispatchToProps = dispatch => ({
   startInitializeTodos: () => dispatch(startInitializeTodos()),
   startFilterTodos: query => dispatch(startFilterTodos(query)),
   resetFilter: () => dispatch(resetFilter()),
-  handleTimeout: timer => dispatch(handleTimeout(timer))
+  handleTimeout: timer => dispatch(handleTimeout(timer)),
+  startGetSuggestions: query => dispatch(startGetSuggestions(query))
 });
 
 export default connect(

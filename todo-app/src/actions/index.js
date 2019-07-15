@@ -128,6 +128,30 @@ export const startFilterTodos = query => {
   };
 };
 
+export const getSuggestions = suggestedTodos => ({
+  type: 'GET_SUGGESTIONS',
+  suggestedTodos
+});
+
+export const startGetSuggestions = query => {
+  const searchQuery = {
+    query
+  };
+
+  return dispatch => {
+    return fetch('http://localhost:8080/todos/suggestions', {
+      method: 'POST',
+      body: JSON.stringify(searchQuery),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => dispatch(getSuggestions(data)))
+      .catch(error => console.log(error));
+  };
+};
+
 export const resetFilter = () => ({
   type: 'RESET_FILTER'
 });
