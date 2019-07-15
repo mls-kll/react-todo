@@ -152,6 +152,11 @@ export const startGetSuggestions = query => {
   };
 };
 
+export const setQuery = query => ({
+  type: 'SET_QUERY',
+  query
+});
+
 export const resetFilter = () => ({
   type: 'RESET_FILTER'
 });

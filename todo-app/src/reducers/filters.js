@@ -1,7 +1,8 @@
 const defaultState = {
   filteredTodos: null,
   hasFiltered: false,
-  suggestedTodos: null
+  suggestedTodos: null,
+  isSuggesting: false
 };
 
 const filters = (state = defaultState, action) => {
@@ -19,8 +20,10 @@ const filters = (state = defaultState, action) => {
         ...state,
         suggestedTodos: action.suggestedTodos
           ? [...action.suggestedTodos]
-          : action.suggestedTodos
+          : action.suggestedTodos,
+        isSuggesting: true
       };
+
     case 'RESET_FILTER':
       return {
         ...state,

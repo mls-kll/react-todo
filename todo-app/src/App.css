@@ -74,9 +74,9 @@
   list-style-type: none;
 }
 
-.suggestion{
+.suggestion {
   cursor: pointer;
-  transition: 0.3s;
+  transition: 0.2s;
   width: 100%;
 }
 

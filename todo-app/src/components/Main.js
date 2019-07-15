@@ -5,13 +5,11 @@ import {
   startRemoveTodo,
   startCompleteTodo,
   startInitializeTodos,
-  startFilterTodos,
-  resetFilter,
-  handleTimeout,
-  startGetSuggestions
+  resetFilter
 } from '../actions/index';
 import { Link } from 'react-router-dom';
 import InputError from './InputError';
+import SearchBox from './SearchBox';
 
 class Main extends React.Component {
   componentDidMount() {
@@ -26,57 +24,17 @@ class Main extends React.Component {
     hasFiltered && resetFilter();
   }
 
-  handleChange = event => {
-    let query = event.target.value;
-    const {
-      handleTimeout,
-      timer,
-      startFilterTodos,
-      startGetSuggestions
-    } = this.props;
-
-    timer && clearTimeout(timer);
-
-    handleTimeout(
-      setTimeout(() => {
-        startFilterTodos(query);
-        startGetSuggestions(query);
-      }, 500)
-    );
-  };
-
   render() {
     const {
       startRemoveTodo,
       startCompleteTodo,
       filteredTodos,
-      suggestedTodos,
       todos
     } = this.props;
     return (
       <div className="Main">
         <div className="todo-wrapper border rounded">
-          <div>
-            <div>
-              <input
-                className="search-input"
-                autoComplete="off"
-                type="text"
-                name="query"
-                onChange={event => this.handleChange(event)}
-              />
-              <i className="fas fa-search ml-2" />
-            </div>
-            <ul className="search-suggestions">
-              {suggestedTodos &&
-                suggestedTodos.map((suggestion, index) => (
-                  <li key={index} className="suggestion">
-                    {suggestion}
-                  </li>
-                ))}
-            </ul>
-          </div>
-
+          <SearchBox />
           <hr />
           <div className="add-todo-icon-container">
             <Link to="/create">
@@ -111,9 +69,9 @@ const mapStateToProps = state => {
     todos: state.todos.todos,
     hasLoaded: state.todos.hasLoaded,
     filteredTodos: state.filters.filteredTodos,
-    suggestedTodos: state.filters.suggestedTodos,
     hasFiltered: state.filters.hasFiltered,
-    timer: state.helpers.timer
+    timer: state.helpers.timer,
+    isSuggesting: state.filters.isSuggesting
   };
 };
 
@@ -121,10 +79,7 @@ const mapDispatchToProps = dispatch => ({
   startRemoveTodo: id => dispatch(startRemoveTodo(id)),
   startCompleteTodo: id => dispatch(startCompleteTodo(id)),
   startInitializeTodos: () => dispatch(startInitializeTodos()),
-  startFilterTodos: query => dispatch(startFilterTodos(query)),
-  resetFilter: () => dispatch(resetFilter()),
-  handleTimeout: timer => dispatch(handleTimeout(timer)),
-  startGetSuggestions: query => dispatch(startGetSuggestions(query))
+  resetFilter: () => dispatch(resetFilter())
 });
 
 export default connect(
