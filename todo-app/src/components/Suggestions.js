@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { startFilterTodos } from '../actions/index';
+import { startFilterTodos, resetSuggestion } from '../actions/index';
 
 class Suggestions extends React.Component {
   handleSuggestionClick = suggestion => {
-    const { startFilterTodos } = this.props;
+    const { startFilterTodos, resetSuggestion } = this.props;
     startFilterTodos(suggestion);
+    resetSuggestion();
   };
 
   render() {
@@ -35,7 +36,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  startFilterTodos: query => dispatch(startFilterTodos(query))
+  startFilterTodos: query => dispatch(startFilterTodos(query)),
+  resetSuggestion: () => dispatch(resetSuggestion())
 });
 
 export default connect(

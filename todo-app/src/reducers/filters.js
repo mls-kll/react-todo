@@ -23,7 +23,11 @@ const filters = (state = defaultState, action) => {
           : action.suggestedTodos,
         isSuggesting: true
       };
-
+    case 'RESET_SUGGESTION':
+      return {
+        ...state,
+        isSuggesting: false
+      };
     case 'RESET_FILTER':
       return {
         ...state,

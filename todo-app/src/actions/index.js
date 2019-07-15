@@ -152,9 +152,8 @@ export const startGetSuggestions = query => {
   };
 };
 
-export const setQuery = query => ({
-  type: 'SET_QUERY',
-  query
+export const resetSuggestion = () => ({
+  type: 'RESET_SUGGESTION'
 });
 
 export const resetFilter = () => ({

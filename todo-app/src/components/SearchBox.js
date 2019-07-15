@@ -4,7 +4,8 @@ import Suggestions from './Suggestions';
 import {
   startFilterTodos,
   handleTimeout,
-  startGetSuggestions
+  startGetSuggestions,
+  resetSuggestion
 } from '../actions/index';
 
 class SearchBox extends React.Component {
@@ -26,6 +27,13 @@ class SearchBox extends React.Component {
       }, 500)
     );
   };
+
+  handleBlur = () => {
+    setTimeout(() => {
+      this.props.resetSuggestion();
+    }, 300);
+  };
+
   render() {
     return (
       <div className="search-box">
@@ -36,6 +44,7 @@ class SearchBox extends React.Component {
             type="text"
             name="query"
             onChange={event => this.handleChange(event)}
+            onBlur={this.handleBlur}
           />
           <i className="fas fa-search ml-2" />
         </div>
@@ -48,15 +57,15 @@ class SearchBox extends React.Component {
 const mapStateToProps = state => {
   return {
     isSuggesting: state.filters.isSuggesting,
-    timer: state.helpers.timer,
-    isSuggesting: state.filters.isSuggesting
+    timer: state.helpers.timer
   };
 };
 
 const mapDispatchToProps = dispatch => ({
   startFilterTodos: query => dispatch(startFilterTodos(query)),
   handleTimeout: timer => dispatch(handleTimeout(timer)),
-  startGetSuggestions: query => dispatch(startGetSuggestions(query))
+  startGetSuggestions: query => dispatch(startGetSuggestions(query)),
+  resetSuggestion: () => dispatch(resetSuggestion())
 });
 
 export default connect(
