@@ -47,10 +47,6 @@ app.post('/todo', (req, res) => {
   res.send(todos);
 });
 
-app.get('/todos/suggestions', (req, res) => {
-  res.json(suggestions);
-});
-
 app.post('/todos/suggestions', (req, res) => {
   const { query } = req.body;
   suggestions = todos.map(todo => todo.title);

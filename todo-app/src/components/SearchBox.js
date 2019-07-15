@@ -39,7 +39,7 @@ class SearchBox extends React.Component {
           />
           <i className="fas fa-search ml-2" />
         </div>
-        <Suggestions />
+        {this.props.isSuggesting && <Suggestions />}
       </div>
     );
   }
@@ -47,10 +47,7 @@ class SearchBox extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    todos: state.todos.todos,
-    hasLoaded: state.todos.hasLoaded,
-    filteredTodos: state.filters.filteredTodos,
-    hasFiltered: state.filters.hasFiltered,
+    isSuggesting: state.filters.isSuggesting,
     timer: state.helpers.timer,
     isSuggesting: state.filters.isSuggesting
   };
