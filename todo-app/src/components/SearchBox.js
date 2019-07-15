@@ -53,7 +53,7 @@ class SearchBox extends React.Component {
           />
           <i className="fas fa-search ml-5" />
         </div>
-        {isSuggesting && filterQuery !== '' && <Suggestions />}
+        <Suggestions />
       </div>
     );
   }
