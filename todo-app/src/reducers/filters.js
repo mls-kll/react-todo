@@ -2,7 +2,8 @@ const defaultState = {
   filteredTodos: null,
   hasFiltered: false,
   suggestedTodos: null,
-  isSuggesting: false
+  isSuggesting: false,
+  query: ''
 };
 
 const filters = (state = defaultState, action) => {
@@ -33,6 +34,11 @@ const filters = (state = defaultState, action) => {
         ...state,
         filteredTodos: null,
         hasFiltered: false
+      };
+    case 'SET_QUERY':
+      return {
+        ...state,
+        query: action.query
       };
     default:
       return state;

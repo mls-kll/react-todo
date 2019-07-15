@@ -5,7 +5,8 @@ import {
   startFilterTodos,
   handleTimeout,
   startGetSuggestions,
-  resetSuggestion
+  resetSuggestion,
+  setQuery
 } from '../actions/index';
 
 class SearchBox extends React.Component {
@@ -15,9 +16,10 @@ class SearchBox extends React.Component {
       handleTimeout,
       timer,
       startFilterTodos,
-      startGetSuggestions
+      startGetSuggestions,
+      setQuery
     } = this.props;
-
+    setQuery(query);
     timer && clearTimeout(timer);
 
     handleTimeout(
@@ -29,14 +31,16 @@ class SearchBox extends React.Component {
   };
 
   handleBlur = () => {
+    const { resetSuggestion } = this.props;
     setTimeout(() => {
-      this.props.resetSuggestion();
+      resetSuggestion();
     }, 300);
   };
 
   render() {
+    const { filterQuery, isSuggesting } = this.props;
     return (
-      <div className="search-box">
+      <div className="search-box ml-3 mt-3">
         <div>
           <input
             className="search-input"
@@ -45,10 +49,11 @@ class SearchBox extends React.Component {
             name="query"
             onChange={event => this.handleChange(event)}
             onBlur={this.handleBlur}
+            value={filterQuery}
           />
-          <i className="fas fa-search ml-2" />
+          <i className="fas fa-search ml-5" />
         </div>
-        {this.props.isSuggesting && <Suggestions />}
+        {isSuggesting && filterQuery !== '' && <Suggestions />}
       </div>
     );
   }
@@ -57,7 +62,8 @@ class SearchBox extends React.Component {
 const mapStateToProps = state => {
   return {
     isSuggesting: state.filters.isSuggesting,
-    timer: state.helpers.timer
+    timer: state.helpers.timer,
+    filterQuery: state.filters.query
   };
 };
 
@@ -65,7 +71,8 @@ const mapDispatchToProps = dispatch => ({
   startFilterTodos: query => dispatch(startFilterTodos(query)),
   handleTimeout: timer => dispatch(handleTimeout(timer)),
   startGetSuggestions: query => dispatch(startGetSuggestions(query)),
-  resetSuggestion: () => dispatch(resetSuggestion())
+  resetSuggestion: () => dispatch(resetSuggestion()),
+  setQuery: query => dispatch(setQuery(query))
 });
 
 export default connect(
