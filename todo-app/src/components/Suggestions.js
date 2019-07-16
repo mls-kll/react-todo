@@ -1,138 +1,83 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { startFilterTodos, resetSuggestion } from '../actions/index';
+import {
+  startFilterTodos,
+  resetSuggestion,
+  setQuery,
+  handleTimeout,
+  startGetSuggestions
+} from '../actions/index';
 import Autosuggest from 'react-autosuggest';
-const languages = [
-  {
-    name: 'C',
-    year: 1972
-  },
-  {
-    name: 'C#',
-    year: 2000
-  },
-  {
-    name: 'C++',
-    year: 1983
-  },
-  {
-    name: 'Clojure',
-    year: 2007
-  },
-  {
-    name: 'Elm',
-    year: 2012
-  },
-  {
-    name: 'Go',
-    year: 2009
-  },
-  {
-    name: 'Haskell',
-    year: 1990
-  },
-  {
-    name: 'Java',
-    year: 1995
-  },
-  {
-    name: 'Javascript',
-    year: 1995
-  },
-  {
-    name: 'Perl',
-    year: 1987
-  },
-  {
-    name: 'PHP',
-    year: 1995
-  },
-  {
-    name: 'Python',
-    year: 1991
-  },
-  {
-    name: 'Ruby',
-    year: 1995
-  },
-  {
-    name: 'Scala',
-    year: 2003
-  }
-];
-
-// https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions#Using_Special_Characters
-function escapeRegexCharacters(str) {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
-function getSuggestions(value) {
-  const escapedValue = escapeRegexCharacters(value.trim());
-
-  if (escapedValue === '') {
-    return [];
-  }
-
-  const regex = new RegExp('^' + escapedValue, 'i');
-
-  return languages.filter(language => regex.test(language.name));
-}
-
-function getSuggestionValue(suggestion) {
-  return suggestion.name;
-}
-
-function renderSuggestion(suggestion) {
-  return <span>{suggestion.name}</span>;
-}
 
 class Suggestions extends React.Component {
-  constructor() {
-    super();
+  getSuggestionValue = suggestion => suggestion.title;
 
-    this.state = {
-      value: '',
-      suggestions: []
-    };
-  }
+  renderSuggestion = suggestion => <span>{suggestion.title}</span>;
 
   onChange = (event, { newValue, method }) => {
-    this.setState({
-      value: newValue
-    });
+    const { handleTimeout, timer, startFilterTodos, setQuery } = this.props;
+
+    setQuery(newValue);
+    timer && clearTimeout(timer);
+
+    handleTimeout(
+      setTimeout(() => {
+        startFilterTodos(newValue);
+      }, 500)
+    );
   };
 
-  onSuggestionsFetchRequested = ({ value }) => {
-    this.setState({
-      suggestions: getSuggestions(value)
-    });
-  };
+  onSuggestionsFetchRequested = () =>
+    this.props.startGetSuggestions(this.props.filterQuery);
 
-  onSuggestionsClearRequested = () => {
-    this.setState({
-      suggestions: []
-    });
-  };
+  onSuggestionsClearRequested = () => this.props.resetSuggestion();
 
   render() {
-    const { value, suggestions } = this.state;
+    const { suggestedTodos, filterQuery } = this.props;
+
     const inputProps = {
-      placeholder: "Type 'c'",
-      value,
+      placeholder: 'Type a todo title',
+      value: filterQuery,
       onChange: this.onChange
     };
+    const suggestions = suggestedTodos ? suggestedTodos : [];
+    console.log(suggestedTodos);
+    setTimeout(() => {
+      console.log('from the timer:', suggestedTodos);
+    }, 1000);
 
     return (
       <Autosuggest
         suggestions={suggestions}
         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
         onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-        getSuggestionValue={getSuggestionValue}
-        renderSuggestion={renderSuggestion}
+        getSuggestionValue={this.getSuggestionValue}
+        renderSuggestion={this.renderSuggestion}
         inputProps={inputProps}
       />
     );
   }
 }
 
-export default Suggestions;
+const mapStateToProps = state => {
+  return {
+    isSuggesting: state.filters.isSuggesting,
+    timer: state.helpers.timer,
+    filterQuery: state.filters.query,
+    todos: state.todos.todos,
+    suggestedTodos: state.filters.suggestedTodos
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  startFilterTodos: query => dispatch(startFilterTodos(query)),
+  resetSuggestion: () => dispatch(resetSuggestion()),
+  setQuery: query => dispatch(setQuery(query)),
+  handleTimeout: timer => dispatch(handleTimeout(timer)),
+  startGetSuggestions: query => dispatch(startGetSuggestions(query))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Suggestions);

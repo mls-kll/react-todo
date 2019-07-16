@@ -1,7 +1,6 @@
 const defaultState = {
   filteredTodos: null,
-  hasFiltered: false,
-  suggestedTodos: null,
+  suggestedTodos: [],
   isSuggesting: false,
   query: ''
 };
@@ -14,7 +13,6 @@ const filters = (state = defaultState, action) => {
         filteredTodos: action.filteredTodos
           ? [...action.filteredTodos]
           : action.filteredTodos,
-        hasFiltered: true
       };
     case 'GET_SUGGESTIONS':
       return {
@@ -32,8 +30,7 @@ const filters = (state = defaultState, action) => {
     case 'RESET_FILTER':
       return {
         ...state,
-        filteredTodos: null,
-        hasFiltered: false
+        filteredTodos: [],
       };
     case 'SET_QUERY':
       return {

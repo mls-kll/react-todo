@@ -37,8 +37,6 @@ let todos = [
   }
 ];
 
-let suggestions = null;
-
 app.get('/todos', (req, res) => {
   res.json(todos);
 });
@@ -57,8 +55,10 @@ app.post('/todo', (req, res) => {
 
 app.post('/todos/suggestions', (req, res) => {
   const { query } = req.body;
-  suggestions = todos.map(todo => todo.title);
-  filteredSuggestions = suggestions.filter(todo => todo.includes(query));
+
+  const suggestions = todos.map(todo => todo.title);
+
+  const filteredSuggestions = suggestions.filter(todo => todo.includes(query));
 
   if (filteredSuggestions.length < 1) {
     filteredSuggestions.push('no match');

@@ -137,7 +137,6 @@ export const startGetSuggestions = query => {
   const searchQuery = {
     query
   };
-
   return dispatch => {
     return fetch('http://localhost:8080/todos/suggestions', {
       method: 'POST',
